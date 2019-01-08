@@ -10,6 +10,7 @@ module pubg.ingestor.consumer {
     requires slf4j.api;
 
     requires ingester.domain;
+    requires pubg.client;
 
     exports io.leinbach.pubg.ingestor.consumer;
 

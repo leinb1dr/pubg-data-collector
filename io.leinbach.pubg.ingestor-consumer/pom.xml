@@ -21,6 +21,11 @@
             <artifactId>pubg-ingester-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.leinbach.pubg</groupId>
+            <artifactId>pubg-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 

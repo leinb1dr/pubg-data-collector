@@ -12,7 +12,11 @@ import java.util.Map;
  */
 public enum EntityType {
     PLAYER("player"),
-    MATCH("match");
+    MATCH("match"),
+    ROSTER("roster"),
+    PARTICIPANT("participant"),
+    ASSET("asset");
+
 
     private String name;
 

@@ -4,5 +4,6 @@ package io.leinbach.pubg.clients.domain;
  * @author leinb
  * @since 1/7/2019
  */
-public class Stats {
+public class RosterEntity extends PubgEntity<RosterAttributes, Relationships> {
+
 }

@@ -2,7 +2,7 @@ package io.leinbach.pubg.clients;
 
 import io.leinbach.pubg.clients.domain.Platform;
 import io.leinbach.pubg.clients.domain.PlayerListResult;
-import io.leinbach.pubg.clients.domain.PubgPlayer;
+import io.leinbach.pubg.clients.domain.PlayerEntity;
 import io.leinbach.pubg.domain.PlayerDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ public class PlayersClient {
                     return false;
                 }, new PlayerListResult())
                 .flatMapMany(playerListResult -> Flux.fromIterable(playerListResult.getData()))
-                .map(PubgPlayer::to);
+                .map(PlayerEntity::to);
     }
 
 }

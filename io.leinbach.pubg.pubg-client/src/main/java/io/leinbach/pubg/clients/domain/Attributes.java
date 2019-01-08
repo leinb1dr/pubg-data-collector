@@ -1,115 +1,83 @@
 package io.leinbach.pubg.clients.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.StringJoiner;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Attributes {
+/**
+ * @author leinb
+ * @since 1/7/2019
+ */
+public class Attributes<T extends Stats> {
 
-    /**
-     * PUBG IGN
-     */
-    @JsonProperty("name")
-    @JsonPropertyDescription("PUBG IGN")
-    private String name;
+
+    public Attributes(String shardId, String name, T stats, LocalDateTime createdAt, String titleId) {
+        this.shardId = shardId;
+        this.name = name;
+        this.stats = stats;
+        this.createdAt = createdAt;
+        this.titleId = titleId;
+    }
+
     /**
      * platform shard
      */
     @JsonProperty("shardId")
     @JsonPropertyDescription("platform shard")
-    private String shardId;
+    protected String shardId;
+    /**
+     * PUBG IGN
+     */
+    @JsonProperty("name")
+    @JsonPropertyDescription("PUBG IGN")
+    protected String name;
     /**
      * N/A
      */
     @JsonProperty("stats")
     @JsonPropertyDescription("N/A")
-    private Stats stats;
+    protected T stats;
     /**
      * N/A
      */
     @JsonProperty("createdAt")
     @JsonPropertyDescription("N/A")
-    private LocalDateTime createdAt;
-    /**
-     * N/A
-     */
-    @JsonProperty("updatedAt")
-    @JsonPropertyDescription("N/A")
-    private LocalDateTime updatedAt;
-    /**
-     * Version of the game
-     */
-    @JsonProperty("patchVersion")
-    @JsonPropertyDescription("Version of the game")
-    private String patchVersion;
+    protected LocalDateTime createdAt;
     /**
      * Identifies the studio and game
      */
     @JsonProperty("titleId")
     @JsonPropertyDescription("Identifies the studio and game")
-    private String titleId;
+    protected String titleId;
 
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", Attributes.class.getSimpleName() + "[", "]")
-                .add("name='" + name + "'")
-                .add("shardId='" + shardId + "'")
-                .add("stats=" + stats)
-                .add("createdAt='" + createdAt + "'")
-                .add("updatedAt='" + updatedAt + "'")
-                .add("patchVersion='" + patchVersion + "'")
-                .add("titleId='" + titleId + "'")
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Attributes that = (Attributes) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(shardId, that.shardId) &&
-                Objects.equals(stats, that.stats) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt) &&
-                Objects.equals(patchVersion, that.patchVersion) &&
-                Objects.equals(titleId, that.titleId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, shardId, stats, createdAt, updatedAt, patchVersion, titleId);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Attributes setName(String name) {
-        this.name = name;
-        return this;
+    public Attributes() {
     }
 
     public String getShardId() {
         return shardId;
     }
 
-    public Attributes setShardId(String shardId) {
+    public Attributes<T> shardId(String shardId) {
         this.shardId = shardId;
         return this;
     }
 
-    public Stats getStats() {
+    public String getName() {
+        return name;
+    }
+
+    public Attributes<T> name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public T getStats() {
         return stats;
     }
 
-    public Attributes setStats(Stats stats) {
+    public Attributes<T> stats(T stats) {
         this.stats = stats;
         return this;
     }
@@ -118,26 +86,8 @@ public class Attributes {
         return createdAt;
     }
 
-    public Attributes setCreatedAt(LocalDateTime createdAt) {
+    public Attributes<T> createdAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        return this;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public Attributes setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    public String getPatchVersion() {
-        return patchVersion;
-    }
-
-    public Attributes setPatchVersion(String patchVersion) {
-        this.patchVersion = patchVersion;
         return this;
     }
 
@@ -145,9 +95,19 @@ public class Attributes {
         return titleId;
     }
 
-    public Attributes setTitleId(String titleId) {
+    public Attributes<T> titleId(String titleId) {
         this.titleId = titleId;
         return this;
     }
 
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Attributes.class.getSimpleName() + "[", "]")
+                .add("shardId='" + shardId + "'")
+                .add("name='" + name + "'")
+                .add("stats=" + stats)
+                .add("createdAt=" + createdAt)
+                .add("titleId='" + titleId + "'")
+                .toString();
+    }
 }
