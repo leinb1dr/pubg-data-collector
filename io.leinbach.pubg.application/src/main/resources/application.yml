@@ -16,9 +16,6 @@ spring:
     username: guest
     password: guest
 
-pubg:
-  jwt: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhOGQ3NDY3MC0zM2NiLTAxMzYtODI4ZC0wOWZlNWVjZTk5YjYiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTI1NjU5ODU0LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InB1YmctbW9jay1hd2FyZHMifQ.-QOiBR5Hjg3-TWkCf9mOhJjepcTw7o7DIjVYUHPhiD8
-
 management:
   endpoint:
     mappings:
