@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>io.leinbach.pubg</groupId>
-            <artifactId>pubg-ingester-domain</artifactId>
+            <artifactId>pubg-ingestor-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
 
