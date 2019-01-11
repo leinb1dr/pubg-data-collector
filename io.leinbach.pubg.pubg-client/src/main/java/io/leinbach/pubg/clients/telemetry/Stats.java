@@ -1,55 +1,81 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.StatsDto;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Stats {
     @JsonProperty("killCount")
-    private final int killCount;
+    private int killCount;
     @JsonProperty("distanceOnFoot")
-    private final double distanceOnFoot;
+    private double distanceOnFoot;
     @JsonProperty("distanceOnSwim")
-    private final double distanceOnSwim;
+    private double distanceOnSwim;
     @JsonProperty("distanceOnVehicle")
-    private final double distanceOnVehicle;
+    private double distanceOnVehicle;
     @JsonProperty("distanceOnParachute")
-    private final double distanceOnParachute;
+    private double distanceOnParachute;
     @JsonProperty("distanceOnFreefall")
-    private final double distanceOnFreefall;
+    private double distanceOnFreefall;
 
-    public Stats(int killCount, double distanceOnFoot, double distanceOnSwim, double distanceOnVehicle, double distanceOnParachute, double distanceOnFreefall) {
-        this.killCount = killCount;
-        this.distanceOnFoot = distanceOnFoot;
-        this.distanceOnSwim = distanceOnSwim;
-        this.distanceOnVehicle = distanceOnVehicle;
-        this.distanceOnParachute = distanceOnParachute;
-        this.distanceOnFreefall = distanceOnFreefall;
+    public StatsDto to() {
+        return new StatsDto()
+                .killCount(killCount)
+                .distanceOnFoot(distanceOnFoot)
+                .distanceOnSwim(distanceOnSwim)
+                .distanceOnVehicle(distanceOnVehicle)
+                .distanceOnParachute(distanceOnParachute)
+                .distanceOnFreefall(distanceOnFreefall);
     }
 
     public int getKillCount() {
         return killCount;
     }
 
+    public void setKillCount(int killCount) {
+        this.killCount = killCount;
+    }
+
     public double getDistanceOnFoot() {
         return distanceOnFoot;
+    }
+
+    public void setDistanceOnFoot(double distanceOnFoot) {
+        this.distanceOnFoot = distanceOnFoot;
     }
 
     public double getDistanceOnSwim() {
         return distanceOnSwim;
     }
 
+    public void setDistanceOnSwim(double distanceOnSwim) {
+        this.distanceOnSwim = distanceOnSwim;
+    }
+
     public double getDistanceOnVehicle() {
         return distanceOnVehicle;
+    }
+
+    public void setDistanceOnVehicle(double distanceOnVehicle) {
+        this.distanceOnVehicle = distanceOnVehicle;
     }
 
     public double getDistanceOnParachute() {
         return distanceOnParachute;
     }
 
+    public void setDistanceOnParachute(double distanceOnParachute) {
+        this.distanceOnParachute = distanceOnParachute;
+    }
+
     public double getDistanceOnFreefall() {
         return distanceOnFreefall;
+    }
+
+    public void setDistanceOnFreefall(double distanceOnFreefall) {
+        this.distanceOnFreefall = distanceOnFreefall;
     }
 
     @Override

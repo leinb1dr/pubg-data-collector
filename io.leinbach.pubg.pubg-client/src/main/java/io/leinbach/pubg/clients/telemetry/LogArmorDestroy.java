@@ -1,22 +1,31 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
+import io.leinbach.pubg.domain.ItemDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class LogArmorDestroy extends LogPlayerTakeDamage {
-    @JsonProperty("item")
-    private final Item item;
 
-    public LogArmorDestroy(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, Character attacker, Character victim, DamageTypeCategory damageTypeCategory, DamageReason damageReason, DamageCauserName damageCauserName, Item item, double distance) {
-        super(eventTimestamp, eventType, common, attackId, attacker, victim, damageTypeCategory, damageReason, damageCauserName, damageCauserAdditionalInfo, distance);
-        this.item = item;
+    @JsonProperty("item")
+    private Item item;
+
+    @Override
+    public EventDto to() {
+        return super.to()
+                .item(item.to());
     }
 
     public Item getItem() {
         return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     @Override

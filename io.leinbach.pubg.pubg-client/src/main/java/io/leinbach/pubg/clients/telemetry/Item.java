@@ -1,48 +1,70 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.ItemDto;
 
 import java.util.List;
 import java.util.Objects;
 
 public class Item {
     @JsonProperty("itemId")
-    private final String itemId;
+    private String itemId;
     @JsonProperty("stackCount")
-    private final int stackCount;
+    private int stackCount;
     @JsonProperty("category")
-    private final String category;
+    private String category;
     @JsonProperty("subCategory")
-    private final String subCategory;
+    private String subCategory;
     @JsonProperty("attachedItems")
-    private final List<String> attachedItems;
+    private List<String> attachedItems;
 
-    public Item(String itemId, int stackCount, String category, String subCategory, List<String> attachedItems) {
-        this.itemId = itemId;
-        this.stackCount = stackCount;
-        this.category = category;
-        this.subCategory = subCategory;
-        this.attachedItems = attachedItems;
+    public ItemDto to(){
+        return new ItemDto()
+                .itemId(itemId)
+                .stackCount(stackCount)
+                .category(category)
+                .subCategory(subCategory)
+                .attachedItems(attachedItems);
     }
 
     public String getItemId() {
         return itemId;
     }
 
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
     public int getStackCount() {
         return stackCount;
+    }
+
+    public void setStackCount(int stackCount) {
+        this.stackCount = stackCount;
     }
 
     public String getCategory() {
         return category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getSubCategory() {
         return subCategory;
     }
 
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
+    }
+
     public List<String> getAttachedItems() {
         return attachedItems;
+    }
+
+    public void setAttachedItems(List<String> attachedItems) {
+        this.attachedItems = attachedItems;
     }
 
     @Override

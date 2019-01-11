@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,15 +9,20 @@ import java.util.StringJoiner;
 
 public class LogVehicleDestroy extends LogWheelDestroy {
     @JsonProperty("distance")
-    private final double distance;
+    private double distance;
 
-    public LogVehicleDestroy(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, Character attacker, Vehicle vehicle, DamageTypeCategory damageTypeCategory, DamageCauserName damageCauserName, double distance) {
-        super(eventTimestamp, eventType, common, attackId, attacker, vehicle, damageTypeCategory, damageCauserName);
-        this.distance = distance;
+    @Override
+    public EventDto to() {
+        return super.to()
+            .distance(distance);
     }
 
     public double getDistance() {
         return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,22 +9,31 @@ import java.util.StringJoiner;
 
 public class LogVehicleRide extends LogPlayerOnlyEvent {
     @JsonProperty("vehicle")
-    private final Vehicle vehicle;
+    private Vehicle vehicle;
     @JsonProperty("seatIndex")
-    private final int seatIndex;
+    private int seatIndex;
 
-    public LogVehicleRide(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, Vehicle vehicle, int seatIndex) {
-        super(eventTimestamp, eventType, common, character);
-        this.vehicle = vehicle;
-        this.seatIndex = seatIndex;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .vehicle(vehicle.to()
+                        .seatIndex(seatIndex));
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
     public int getSeatIndex() {
         return seatIndex;
+    }
+
+    public void setSeatIndex(int seatIndex) {
+        this.seatIndex = seatIndex;
     }
 
     @Override

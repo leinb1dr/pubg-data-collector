@@ -1,35 +1,52 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.ItemPackageDto;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class ItemPackage {
     @JsonProperty("itemPackageId")
-    private final String itemPackageId;
+    private String itemPackageId;
     @JsonProperty("location")
-    private final Location location;
+    private Location location;
     @JsonProperty("items")
-    private final List<Item> items;
-
-    public ItemPackage(String itemPackageId, Location location, List<Item> items) {
-        this.itemPackageId = itemPackageId;
-        this.location = location;
-        this.items = items;
-    }
+    private List<Item> items;
 
     public String getItemPackageId() {
         return itemPackageId;
+    }
+
+    public void setItemPackageId(String itemPackageId) {
+        this.itemPackageId = itemPackageId;
     }
 
     public Location getLocation() {
         return location;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public List<Item> getItems() {
         return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public ItemPackageDto to() {
+        return new ItemPackageDto()
+                .itemPackageId(itemPackageId)
+                .location(location.to())
+                .items(items.stream()
+                        .map(Item::to)
+                        .collect(Collectors.toList()));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.AttackDto;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,85 +11,139 @@ import java.util.StringJoiner;
 
 public class LogPlayerKill extends TelemetryBase {
     @JsonProperty("attackId")
-    private final int attackId;
+    private int attackId;
     @JsonProperty("killer")
-    private final Character killer;
+    private Character killer;
     @JsonProperty("victim")
-    private final Character victim;
+    private Character victim;
     @JsonProperty("assistant")
-    private final Character assistant;
+    private Character assistant;
     @JsonProperty("dBNOId")
-    private final int dbnoId;
+    private int dbnoId;
     @JsonProperty("damageTypeCategory")
-    private final DamageTypeCategory damageTypeCategory;
+    private DamageTypeCategory damageTypeCategory;
     @JsonProperty("damageCauserName")
-    private final DamageCauserName damageCauserName;
+    private DamageCauserName damageCauserName;
     @JsonProperty("damageCauserAdditionalInfo")
-    private final List<String> damageCauserAdditionalInfo;
+    private List<String> damageCauserAdditionalInfo;
     @JsonProperty("damageReason")
-    private final DamageReason damageReason;
+    private DamageReason damageReason;
     @JsonProperty("distance")
-    private final double distance;
+    private double distance;
     @JsonProperty("victimGameResult")
-    private final GameResult gameResult;
+    private GameResult gameResult;
 
-    public LogPlayerKill(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, Character killer, Character victim, Character assistant, int dbnoId, DamageTypeCategory damageTypeCategory, DamageCauserName damageCauserName, List<String> damageCauserAdditionalInfo, DamageReason damageReason, double distance, GameResult gameResult) {
-        super(eventTimestamp, eventType, common);
-        this.attackId = attackId;
-        this.killer = killer;
-        this.victim = victim;
-        this.assistant = assistant;
-        this.dbnoId = dbnoId;
-        this.damageTypeCategory = damageTypeCategory;
-        this.damageCauserName = damageCauserName;
-        this.damageCauserAdditionalInfo = damageCauserAdditionalInfo;
-        this.damageReason = damageReason;
-        this.distance = distance;
-        this.gameResult = gameResult;
+    @Override
+    public EventDto to() {
+        return new EventDto()
+                .attackId(attackId)
+                .character(killer.to())
+                .target(victim.to()
+                        .gameResult(gameResult.getGameResult())
+                        .rank(gameResult.getRank())
+                        .stats(gameResult.getStats()
+                                .to())
+                )
+                .assistant(assistant.to())
+                .dbnoId(dbnoId)
+                .attack(new AttackDto()
+                        .damageTypeCategory(damageTypeCategory.name())
+                        .damageCauserName(damageCauserName.getKey()
+                                .toUpperCase())
+                        .damageCauserType(damageCauserName.getName()
+                                .toUpperCase())
+                        .damageCauserAdditionalInfo(damageCauserAdditionalInfo)
+                        .damageReason(damageReason.name())
+                        .distance(distance)
+                );
     }
 
     public int getAttackId() {
         return attackId;
     }
 
+    public void setAttackId(int attackId) {
+        this.attackId = attackId;
+    }
+
     public Character getKiller() {
         return killer;
+    }
+
+    public void setKiller(Character killer) {
+        this.killer = killer;
     }
 
     public Character getVictim() {
         return victim;
     }
 
+    public void setVictim(Character victim) {
+        this.victim = victim;
+    }
+
     public Character getAssistant() {
         return assistant;
+    }
+
+    public void setAssistant(Character assistant) {
+        this.assistant = assistant;
     }
 
     public int getDbnoId() {
         return dbnoId;
     }
 
+    public void setDbnoId(int dbnoId) {
+        this.dbnoId = dbnoId;
+    }
+
     public DamageTypeCategory getDamageTypeCategory() {
         return damageTypeCategory;
+    }
+
+    public void setDamageTypeCategory(DamageTypeCategory damageTypeCategory) {
+        this.damageTypeCategory = damageTypeCategory;
     }
 
     public DamageCauserName getDamageCauserName() {
         return damageCauserName;
     }
 
+    public void setDamageCauserName(DamageCauserName damageCauserName) {
+        this.damageCauserName = damageCauserName;
+    }
+
     public List<String> getDamageCauserAdditionalInfo() {
         return damageCauserAdditionalInfo;
+    }
+
+    public void setDamageCauserAdditionalInfo(List<String> damageCauserAdditionalInfo) {
+        this.damageCauserAdditionalInfo = damageCauserAdditionalInfo;
     }
 
     public DamageReason getDamageReason() {
         return damageReason;
     }
 
+    public void setDamageReason(DamageReason damageReason) {
+        this.damageReason = damageReason;
+    }
+
     public double getDistance() {
         return distance;
     }
 
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
     public GameResult getGameResult() {
         return gameResult;
+    }
+
+    public void setGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
     }
 
     @Override

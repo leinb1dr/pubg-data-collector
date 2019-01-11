@@ -10,14 +10,7 @@ import java.util.StringJoiner;
 public class MatchDto {
     private String id;
     private String type;
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", MatchDto.class.getSimpleName() + "[", "]")
-                .add("id='" + id + "'")
-                .add("type='" + type + "'")
-                .toString();
-    }
+    private String telemetryUrl;
 
     public MatchDto() {
     }
@@ -27,20 +20,13 @@ public class MatchDto {
         this.type = type;
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MatchDto matchDto = (MatchDto) o;
-        return Objects.equals(id, matchDto.id) &&
-                Objects.equals(type, matchDto.type);
+    public String getTelemetryUrl() {
+        return telemetryUrl;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, type);
+    public MatchDto telemetryUrl(String telemetryUrl) {
+        this.telemetryUrl = telemetryUrl;
+        return this;
     }
 
     public String getId() {
@@ -59,5 +45,28 @@ public class MatchDto {
     public MatchDto type(String type) {
         this.type = type;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MatchDto matchDto = (MatchDto) o;
+        return Objects.equals(id, matchDto.id) &&
+                Objects.equals(type, matchDto.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", MatchDto.class.getSimpleName() + "[", "]")
+                .add("id='" + id + "'")
+                .add("type='" + type + "'")
+                .add("telemetryUrl='" + telemetryUrl + "'")
+                .toString();
     }
 }

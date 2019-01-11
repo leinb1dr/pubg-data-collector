@@ -1,6 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,29 +10,42 @@ import java.util.StringJoiner;
 
 public class LogMatchDefinition extends TelemetryBase {
     @JsonProperty("MatchId")
-    private final String matchId;
+    private String matchId;
     @JsonProperty("PingQuality")
-    private final String pingQuality;
+    private String pingQuality;
     @JsonProperty("SeasonState")
-    private final String seasonState;
+    private String seasonState;
 
-    public LogMatchDefinition(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, String matchId, String pingQuality, String seasonState) {
-        super(eventTimestamp, eventType, common);
-        this.matchId = matchId;
-        this.pingQuality = pingQuality;
-        this.seasonState = seasonState;
+    @Override
+    public EventDto to() {
+        return new EventDto()
+                .matchId(matchId)
+                .pingQuality(pingQuality)
+                .seasonState(seasonState);
     }
 
     public String getMatchId() {
         return matchId;
     }
 
+    public void setMatchId(String matchId) {
+        this.matchId = matchId;
+    }
+
     public String getPingQuality() {
         return pingQuality;
     }
 
+    public void setPingQuality(String pingQuality) {
+        this.pingQuality = pingQuality;
+    }
+
     public String getSeasonState() {
         return seasonState;
+    }
+
+    public void setSeasonState(String seasonState) {
+        this.seasonState = seasonState;
     }
 
     @Override

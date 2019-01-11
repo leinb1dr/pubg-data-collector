@@ -1,6 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
+import io.leinbach.pubg.domain.ItemDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,22 +10,32 @@ import java.util.StringJoiner;
 
 public class LogWeaponFireCount extends LogPlayerOnlyEvent {
     @JsonProperty("weaponId")
-    private final String weaponId;
+    private String weaponId;
     @JsonProperty("fireCount")
-    private final int fireCount;
+    private int fireCount;
 
-    public LogWeaponFireCount(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, String weaponId, int fireCount) {
-        super(eventTimestamp, eventType, common, character);
-        this.weaponId = weaponId;
-        this.fireCount = fireCount;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .item(new ItemDto()
+                        .itemId(weaponId)
+                        .fireCount(fireCount));
     }
 
     public String getWeaponId() {
         return weaponId;
     }
 
+    public void setWeaponId(String weaponId) {
+        this.weaponId = weaponId;
+    }
+
     public int getFireCount() {
         return fireCount;
+    }
+
+    public void setFireCount(int fireCount) {
+        this.fireCount = fireCount;
     }
 
     @Override

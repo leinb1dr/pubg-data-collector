@@ -2,34 +2,47 @@ package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import io.leinbach.pubg.domain.LocationDto;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Location {
     @JsonProperty("x")
-    private final double x;
+    private double x;
     @JsonProperty("y")
-    private final double y;
+    private double y;
     @JsonProperty("z")
-    private final double z;
-
-    public Location(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+    private double z;
 
     public double getX() {
         return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
     }
 
     public double getY() {
         return y;
     }
 
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public double getZ() {
         return z;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
+    }
+
+    public LocationDto to() {
+        return new LocationDto().x(x)
+                .y(y)
+                .z(z);
     }
 
     @Override

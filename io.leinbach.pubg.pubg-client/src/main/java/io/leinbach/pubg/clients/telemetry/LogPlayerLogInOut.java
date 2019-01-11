@@ -1,8 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -10,8 +10,19 @@ public class LogPlayerLogInOut extends TelemetryBase {
     @JsonProperty("accountId")
     private String accountId;
 
-    public LogPlayerLogInOut(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common) {
-        super(eventTimestamp, eventType, common);
+    @Override
+    public EventDto to() {
+        return new EventDto()
+                .accountId(accountId);
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public LogPlayerLogInOut setAccountId(String accountId) {
+        this.accountId = accountId;
+        return this;
     }
 
     @Override
@@ -36,15 +47,6 @@ public class LogPlayerLogInOut extends TelemetryBase {
                 .add("eventType=" + eventType)
                 .add("common=" + common)
                 .toString();
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public LogPlayerLogInOut setAccountId(String accountId) {
-        this.accountId = accountId;
-        return this;
     }
 
 }

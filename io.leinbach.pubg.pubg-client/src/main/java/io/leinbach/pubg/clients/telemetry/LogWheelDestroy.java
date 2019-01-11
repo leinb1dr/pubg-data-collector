@@ -1,6 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.AttackDto;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,43 +10,67 @@ import java.util.StringJoiner;
 
 public class LogWheelDestroy extends TelemetryBase {
     @JsonProperty("attackId")
-    protected final int attackId;
+    protected int attackId;
     @JsonProperty("attacker")
-    protected final Character attacker;
+    protected Character attacker;
     @JsonProperty("vehicle")
-    protected final Vehicle vehicle;
+    protected Vehicle vehicle;
     @JsonProperty("damageTypeCategory")
-    protected final DamageTypeCategory damageTypeCategory;
+    protected DamageTypeCategory damageTypeCategory;
     @JsonProperty("damageCauserName")
-    protected final DamageCauserName damageCauserName;
+    protected DamageCauserName damageCauserName;
 
-    public LogWheelDestroy(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, Character attacker, Vehicle vehicle, DamageTypeCategory damageTypeCategory, DamageCauserName damageCauserName) {
-        super(eventTimestamp, eventType, common);
-        this.attackId = attackId;
-        this.attacker = attacker;
-        this.vehicle = vehicle;
-        this.damageTypeCategory = damageTypeCategory;
-        this.damageCauserName = damageCauserName;
+    @Override
+    public EventDto to() {
+        return new EventDto()
+                .attackId(attackId)
+                .character(attacker.to())
+                .vehicle(vehicle.to())
+                .attack(new AttackDto()
+                        .damageTypeCategory(damageTypeCategory.name())
+                        .damageCauserName(damageCauserName.getKey().toUpperCase())
+                        .damageCauserType(damageCauserName.getName().toUpperCase())
+                );
     }
 
     public int getAttackId() {
         return attackId;
     }
 
+    public void setAttackId(int attackId) {
+        this.attackId = attackId;
+    }
+
     public Character getAttacker() {
         return attacker;
+    }
+
+    public void setAttacker(Character attacker) {
+        this.attacker = attacker;
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
     public DamageTypeCategory getDamageTypeCategory() {
         return damageTypeCategory;
     }
 
+    public void setDamageTypeCategory(DamageTypeCategory damageTypeCategory) {
+        this.damageTypeCategory = damageTypeCategory;
+    }
+
     public DamageCauserName getDamageCauserName() {
         return damageCauserName;
+    }
+
+    public void setDamageCauserName(DamageCauserName damageCauserName) {
+        this.damageCauserName = damageCauserName;
     }
 
     @Override

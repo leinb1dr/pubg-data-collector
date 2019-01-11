@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,64 +10,89 @@ import java.util.StringJoiner;
 
 public class LogMatchStart extends TelemetryBase {
     @JsonProperty("mapName")
-    private final String mapName;
+    private String mapName;
     @JsonProperty("weatherId")
-    private final String weatherId;
+    private String weatherId;
     @JsonProperty("characters")
-    private final List<Character> characters;
+    private List<Character> characters;
     @JsonProperty("cameraViewBehaviour")
-    private final String cameraViewBehaviour;
+    private String cameraViewBehaviour;
     @JsonProperty("teamSize")
-    private final int teamSize;
+    private int teamSize;
     @JsonProperty("isCustomGame")
-    private final boolean customGame;
+    private boolean customGame;
     @JsonProperty("isEventMode")
-    private final boolean eventMode;
+    private boolean eventMode;
     @JsonProperty("blueZoneCustomOptions")
-    private final String blueZoneCustomOptions;
+    private String blueZoneCustomOptions;
 
-    public LogMatchStart(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, String mapName, String weatherId, List<Character> characters, String cameraViewBehaviour, int teamSize, boolean customGame, boolean eventMode, String blueZoneCustomOptions) {
-        super(eventTimestamp, eventType, common);
-        this.mapName = mapName;
-        this.weatherId = weatherId;
-        this.characters = characters;
-        this.cameraViewBehaviour = cameraViewBehaviour;
-        this.teamSize = teamSize;
-        this.customGame = customGame;
-        this.eventMode = eventMode;
-        this.blueZoneCustomOptions = blueZoneCustomOptions;
+    @Override
+    public EventDto to() {
+        return new EventDto();
     }
 
     public String getMapName() {
         return mapName;
     }
 
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
+    }
+
     public String getWeatherId() {
         return weatherId;
+    }
+
+    public void setWeatherId(String weatherId) {
+        this.weatherId = weatherId;
     }
 
     public List<Character> getCharacters() {
         return characters;
     }
 
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
     public String getCameraViewBehaviour() {
         return cameraViewBehaviour;
+    }
+
+    public void setCameraViewBehaviour(String cameraViewBehaviour) {
+        this.cameraViewBehaviour = cameraViewBehaviour;
     }
 
     public int getTeamSize() {
         return teamSize;
     }
 
+    public void setTeamSize(int teamSize) {
+        this.teamSize = teamSize;
+    }
+
     public boolean isCustomGame() {
         return customGame;
+    }
+
+    public void setCustomGame(boolean customGame) {
+        this.customGame = customGame;
     }
 
     public boolean isEventMode() {
         return eventMode;
     }
 
+    public void setEventMode(boolean eventMode) {
+        this.eventMode = eventMode;
+    }
+
     public String getBlueZoneCustomOptions() {
         return blueZoneCustomOptions;
+    }
+
+    public void setBlueZoneCustomOptions(String blueZoneCustomOptions) {
+        this.blueZoneCustomOptions = blueZoneCustomOptions;
     }
 
     @Override

@@ -6,20 +6,13 @@ import java.util.Objects;
 
 public class TelemetryCommon {
     @JsonProperty("isGame")
-    private boolean game;
+    private double game;
 
-    public TelemetryCommon() {
-    }
-
-    public TelemetryCommon(boolean game) {
-        this.game = game;
-    }
-
-    public boolean isGame() {
+    public double isGame() {
         return game;
     }
 
-    public TelemetryCommon setGame(boolean game) {
+    public TelemetryCommon setGame(double game) {
         this.game = game;
         return this;
     }

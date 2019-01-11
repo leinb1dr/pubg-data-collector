@@ -1,5 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum EventType {
     LOGARMORDESTROY,
     LOGCAREPACKAGELAND,
@@ -37,5 +39,10 @@ public enum EventType {
     LOGVEHICLELEAVE,
     LOGVEHICLERIDE,
     LOGWEAPONFIRECOUNT,
-    LOGWHEELDESTROY
+    LOGWHEELDESTROY;
+
+    @JsonCreator
+    public static EventType creator(String eventName) {
+        return EventType.valueOf(eventName.toUpperCase());
+    }
 }

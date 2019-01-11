@@ -1,6 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.AttackDto;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,36 +11,100 @@ import java.util.StringJoiner;
 
 public class LogPlayerTakeDamage extends TelemetryBase {
     @JsonProperty("attackId")
-    protected final int attackId;
+    protected int attackId;
     @JsonProperty("attacker")
-    protected final Character attacker;
+    protected Character attacker;
     @JsonProperty("victim")
-    protected final Character victim;
+    protected Character victim;
     @JsonProperty("damageTypeCategory")
-    protected final DamageTypeCategory damageTypeCategory;
+    protected DamageTypeCategory damageTypeCategory;
     @JsonProperty("damageReason")
-    protected final DamageReason damageReason;
+    protected DamageReason damageReason;
     @JsonProperty("damageCauserName")
-    protected final DamageCauserName damageCauserName;
+    protected DamageCauserName damageCauserName;
     @JsonProperty("distance")
-    protected final double distance;
+    protected double distance;
     @JsonProperty("damageCauserAdditionalInfo")
-    protected final List<String> damageCauserAdditionalInfo;
+    protected List<String> damageCauserAdditionalInfo;
 
-    public LogPlayerTakeDamage(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, Character attacker, Character victim, DamageTypeCategory damageTypeCategory, DamageReason damageReason, DamageCauserName damageCauserName, List<String> damageCauserAdditionalInfo, double distance) {
-        super(eventTimestamp, eventType, common);
-        this.attackId = attackId;
-        this.attacker = attacker;
-        this.victim = victim;
-        this.damageTypeCategory = damageTypeCategory;
-        this.damageReason = damageReason;
-        this.damageCauserName = damageCauserName;
-        this.damageCauserAdditionalInfo = damageCauserAdditionalInfo;
-        this.distance = distance;
+    @Override
+    public EventDto to() {
+        return new EventDto().attackId(attackId)
+                .character(attacker != null ? attacker.to() : null)
+                .target(victim.to())
+                .attack(new AttackDto()
+                        .damageCauserAdditionalInfo(damageCauserAdditionalInfo)
+                        .damageCauserName(damageCauserName.getKey()
+                                .toUpperCase())
+                        .damageCauserType(damageCauserName.getName()
+                                .toUpperCase())
+                        .damageReason(damageReason != null ? damageReason.name() : null)
+                        .damageTypeCategory(damageTypeCategory.name())
+                );
     }
 
     public List<String> getDamageCauserAdditionalInfo() {
         return damageCauserAdditionalInfo;
+    }
+
+    public void setDamageCauserAdditionalInfo(List<String> damageCauserAdditionalInfo) {
+        this.damageCauserAdditionalInfo = damageCauserAdditionalInfo;
+    }
+
+    public int getAttackId() {
+        return attackId;
+    }
+
+    public void setAttackId(int attackId) {
+        this.attackId = attackId;
+    }
+
+    public Character getAttacker() {
+        return attacker;
+    }
+
+    public void setAttacker(Character attacker) {
+        this.attacker = attacker;
+    }
+
+    public Character getVictim() {
+        return victim;
+    }
+
+    public void setVictim(Character victim) {
+        this.victim = victim;
+    }
+
+    public DamageTypeCategory getDamageTypeCategory() {
+        return damageTypeCategory;
+    }
+
+    public void setDamageTypeCategory(DamageTypeCategory damageTypeCategory) {
+        this.damageTypeCategory = damageTypeCategory;
+    }
+
+    public DamageReason getDamageReason() {
+        return damageReason;
+    }
+
+    public void setDamageReason(DamageReason damageReason) {
+        this.damageReason = damageReason;
+    }
+
+    public DamageCauserName getDamageCauserName() {
+        return damageCauserName;
+    }
+
+    public void setDamageCauserName(DamageCauserName damageCauserName) {
+        this.damageCauserName = damageCauserName;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override
@@ -77,33 +143,5 @@ public class LogPlayerTakeDamage extends TelemetryBase {
                 .add("eventType=" + eventType)
                 .add("common=" + common)
                 .toString();
-    }
-
-    public int getAttackId() {
-        return attackId;
-    }
-
-    public Character getAttacker() {
-        return attacker;
-    }
-
-    public Character getVictim() {
-        return victim;
-    }
-
-    public DamageTypeCategory getDamageTypeCategory() {
-        return damageTypeCategory;
-    }
-
-    public DamageReason getDamageReason() {
-        return damageReason;
-    }
-
-    public DamageCauserName getDamageCauserName() {
-        return damageCauserName;
-    }
-
-    public double getDistance() {
-        return distance;
     }
 }

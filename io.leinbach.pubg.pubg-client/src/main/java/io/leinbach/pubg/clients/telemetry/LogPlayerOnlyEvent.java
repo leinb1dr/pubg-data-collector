@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,15 +9,19 @@ import java.util.StringJoiner;
 
 public class LogPlayerOnlyEvent extends TelemetryBase {
     @JsonProperty("character")
-    protected final Character character;
-
-    public LogPlayerOnlyEvent(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character) {
-        super(eventTimestamp, eventType, common);
-        this.character = character;
-    }
+    protected Character character;
 
     public Character getCharacter() {
         return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+    @Override
+    public EventDto to() {
+        return new EventDto().character(character.to());
     }
 
     @Override

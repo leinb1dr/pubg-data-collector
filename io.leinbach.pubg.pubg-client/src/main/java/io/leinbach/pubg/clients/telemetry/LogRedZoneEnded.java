@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,15 +10,19 @@ import java.util.StringJoiner;
 
 public class LogRedZoneEnded extends TelemetryBase {
     @JsonProperty("drivers")
-    private final List<Character> drivers;
+    private List<Character> drivers;
 
-    public LogRedZoneEnded(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, List<Character> drivers) {
-        super(eventTimestamp, eventType, common);
-        this.drivers = drivers;
+    @Override
+    public EventDto to() {
+        return new EventDto();
     }
 
     public List<Character> getDrivers() {
         return drivers;
+    }
+
+    public void setDrivers(List<Character> drivers) {
+        this.drivers = drivers;
     }
 
     @Override

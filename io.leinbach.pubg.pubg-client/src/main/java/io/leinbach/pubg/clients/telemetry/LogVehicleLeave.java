@@ -8,22 +8,26 @@ import java.util.StringJoiner;
 
 public class LogVehicleLeave extends LogVehicleRide {
     @JsonProperty("rideDistance")
-    private final double rideDistance;
+    private double rideDistance;
     @JsonProperty("maxSpeed")
-    private final double maxSpeed;
+    private double maxSpeed;
 
-    public LogVehicleLeave(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, Vehicle vehicle, int seatIndex, double rideDistance, double maxSpeed) {
-        super(eventTimestamp, eventType, common, character, vehicle, seatIndex);
-        this.rideDistance = rideDistance;
-        this.maxSpeed = maxSpeed;
-    }
+
 
     public double getRideDistance() {
         return rideDistance;
     }
 
+    public void setRideDistance(double rideDistance) {
+        this.rideDistance = rideDistance;
+    }
+
     public double getMaxSpeed() {
         return maxSpeed;
+    }
+
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
     @Override

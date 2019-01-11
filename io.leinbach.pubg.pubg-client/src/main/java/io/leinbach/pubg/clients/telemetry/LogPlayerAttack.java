@@ -1,6 +1,8 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.AttackDto;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -9,50 +11,76 @@ import java.util.StringJoiner;
 public class LogPlayerAttack extends TelemetryBase {
 
     @JsonProperty("attackId")
-    private final int attackId;
+    private int attackId;
     @JsonProperty("fireWeaponStackCount")
-    private final int fireWeaponStackCount;
+    private int fireWeaponStackCount;
     @JsonProperty("attacker")
-    private final Character attacker;
+    private Character attacker;
     @JsonProperty("attackType")
-    private final String attackType;
+    private String attackType;
     @JsonProperty("weapon")
-    private final Item weapon;
+    private Item weapon;
     @JsonProperty("vehicle")
-    private final Vehicle vehicle;
+    private Vehicle vehicle;
 
-    public LogPlayerAttack(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, int fireWeaponStackCount, Character attacker, String attackType, Item weapon, Vehicle vehicle) {
-        super(eventTimestamp, eventType, common);
-        this.attackId = attackId;
-        this.fireWeaponStackCount = fireWeaponStackCount;
-        this.attacker = attacker;
-        this.attackType = attackType;
-        this.weapon = weapon;
-        this.vehicle = vehicle;
+    @Override
+    public EventDto to() {
+        return new EventDto()
+                .attackId(attackId)
+                .character(attacker.to())
+                .item(weapon.to())
+                .vehicle(vehicle != null ? vehicle.to() : null)
+                .attack(new AttackDto()
+                        .attackType(attackType)
+                        .fireWeaponStackCount(fireWeaponStackCount));
     }
 
     public int getAttackId() {
         return attackId;
     }
 
+    public void setAttackId(int attackId) {
+        this.attackId = attackId;
+    }
+
     public int getFireWeaponStackCount() {
         return fireWeaponStackCount;
+    }
+
+    public void setFireWeaponStackCount(int fireWeaponStackCount) {
+        this.fireWeaponStackCount = fireWeaponStackCount;
     }
 
     public Character getAttacker() {
         return attacker;
     }
 
+    public void setAttacker(Character attacker) {
+        this.attacker = attacker;
+    }
+
     public String getAttackType() {
         return attackType;
+    }
+
+    public void setAttackType(String attackType) {
+        this.attackType = attackType;
     }
 
     public Item getWeapon() {
         return weapon;
     }
 
+    public void setWeapon(Item weapon) {
+        this.weapon = weapon;
+    }
+
     public Vehicle getVehicle() {
         return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,15 +9,19 @@ import java.util.StringJoiner;
 
 public class LogGameStatePeriodic extends TelemetryBase {
     @JsonProperty("gameState")
-    private final GameState gameState;
+    private GameState gameState;
 
-    public LogGameStatePeriodic(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, GameState gameState) {
-        super(eventTimestamp, eventType, common);
-        this.gameState = gameState;
+    @Override
+    public EventDto to() {
+        return new EventDto().gameState(gameState.to());
     }
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     @Override

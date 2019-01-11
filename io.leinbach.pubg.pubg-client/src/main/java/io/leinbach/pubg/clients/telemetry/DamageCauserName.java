@@ -1,5 +1,11 @@
 package io.leinbach.pubg.clients.telemetry;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public enum DamageCauserName {
     AquaRail_A_01_C("AquaRail_A_01_C", "Aquarail"),
     AquaRail_A_02_C("AquaRail_A_02_C", "Aquarail"),
@@ -96,23 +102,41 @@ public enum DamageCauserName {
     WeapRhino_C("WeapRhino_C", "R45"),
     WeapSaiga12_C("WeapSaiga12_C", "S12K"),
     WeapSawnoff_C("WeapSawnoff_C", "Sawed-off"),
-    WeapSCAR_L_C("WeapSCAR-L_C","SCAR-L"),
-    WeapSickle_C("WeapSickle_C","Sickle"),
-    WeapSKS_C("WeapSKS_C","SKS"),
-    WeapThompson_C("WeapThompson_C","Tommy Gun"),
-    WeapUMP_C("WeapUMP_C","UMP9"),
-    WeapUZI_C("WeapUZI_C","Micro Uzi"),
-    WeapVector_C("WeapVector_C","Vector"),
-    WeapVSS_C("WeapVSS_C","VSS"),
-    Weapvz61Skorpion_C("Weapvz61Skorpion_C","Skorpion"),
-    WeapWin94_C("WeapWin94_C","Win94"),
-    WeapWinchester_C("WeapWinchester_C","S1897");
+    WeapSCAR_L_C("WeapSCAR-L_C", "SCAR-L"),
+    WeapSickle_C("WeapSickle_C", "Sickle"),
+    WeapSKS_C("WeapSKS_C", "SKS"),
+    WeapThompson_C("WeapThompson_C", "Tommy Gun"),
+    WeapUMP_C("WeapUMP_C", "UMP9"),
+    WeapUZI_C("WeapUZI_C", "Micro Uzi"),
+    WeapVector_C("WeapVector_C", "Vector"),
+    WeapVSS_C("WeapVSS_C", "VSS"),
+    Weapvz61Skorpion_C("Weapvz61Skorpion_C", "Skorpion"),
+    WeapWin94_C("WeapWin94_C", "Win94"),
+    WeapWinchester_C("WeapWinchester_C", "S1897");
 
+    private static final Map<String, DamageCauserName> CREATOR_MAP = new HashMap<>() {{
+        Arrays.stream(DamageCauserName.values())
+                .forEach(entityType -> put(entityType.key, entityType));
+    }};
     private final String key;
     private final String name;
 
-    DamageCauserName(String key, String name){
-        this.key = key;
+    DamageCauserName(String key, String name) {
         this.name = name;
+        this.key = key;
     }
+
+    @JsonCreator
+    public static DamageCauserName creator(String key) {
+        return CREATOR_MAP.get(key);
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

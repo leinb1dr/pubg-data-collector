@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.CharacterDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -8,70 +9,106 @@ import java.util.StringJoiner;
 
 public class Character {
     @JsonProperty("name")
-    private final String name;
+    private String name;
     @JsonProperty("teamId")
-    private final int teamId;
+    private int teamId;
     @JsonProperty("health")
-    private final double health;
+    private double health;
     @JsonProperty("location")
-    private final Location location;
+    private Location location;
     @JsonProperty("ranking")
-    private final int ranking;
+    private int ranking;
     @JsonProperty("accountId")
-    private final String accountId;
+    private String accountId;
     @JsonProperty("isInBlueZone")
-    private final boolean inBlueZone;
+    private boolean inBlueZone;
     @JsonProperty("isInRedZone")
-    private final boolean inRedZone;
+    private boolean inRedZone;
     @JsonProperty("zone")
-    private final List<String> zone;
-
-    public Character(String name, int teamId, double health, Location location, int ranking, String accountId, boolean inBlueZone, boolean inRedZone, List<String> zone) {
-        this.name = name;
-        this.teamId = teamId;
-        this.health = health;
-        this.location = location;
-        this.ranking = ranking;
-        this.accountId = accountId;
-        this.inBlueZone = inBlueZone;
-        this.inRedZone = inRedZone;
-        this.zone = zone;
-    }
+    private List<String> zone;
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getTeamId() {
         return teamId;
     }
 
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
     public double getHealth() {
         return health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
     }
 
     public Location getLocation() {
         return location;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public int getRanking() {
         return ranking;
+    }
+
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
     }
 
     public String getAccountId() {
         return accountId;
     }
 
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
     public boolean isInBlueZone() {
         return inBlueZone;
+    }
+
+    public void setInBlueZone(boolean inBlueZone) {
+        this.inBlueZone = inBlueZone;
     }
 
     public boolean isInRedZone() {
         return inRedZone;
     }
 
+    public void setInRedZone(boolean inRedZone) {
+        this.inRedZone = inRedZone;
+    }
+
     public List<String> getZone() {
         return zone;
+    }
+
+    public void setZone(List<String> zone) {
+        this.zone = zone;
+    }
+
+    public CharacterDto to() {
+        return new CharacterDto().accountId(accountId)
+                .health(health)
+                .inBlueZone(inBlueZone)
+                .inRedZone(inRedZone)
+                .location(location.to())
+                .name(name)
+                .rank(ranking)
+                .teamId(teamId)
+                .zone(zone);
     }
 
     @Override

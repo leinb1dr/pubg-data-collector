@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,29 +10,42 @@ import java.util.StringJoiner;
 
 public class LogPlayerRevive extends TelemetryBase {
     @JsonProperty("reviver")
-    protected final Character reviver;
+    protected Character reviver;
     @JsonProperty("victim")
-    protected final Character victim;
+    protected Character victim;
     @JsonProperty("dBNOId")
-    protected final int dbnoId;
+    protected int dbnoId;
 
-    public LogPlayerRevive(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character reviver, Character victim, int dbnoId) {
-        super(eventTimestamp, eventType, common);
-        this.reviver = reviver;
-        this.victim = victim;
-        this.dbnoId = dbnoId;
+    @Override
+    public EventDto to() {
+        return new EventDto()
+                .character(reviver.to())
+                .target(victim.to())
+                .dbnoId(dbnoId);
     }
 
     public Character getReviver() {
         return reviver;
     }
 
+    public void setReviver(Character reviver) {
+        this.reviver = reviver;
+    }
+
     public Character getVictim() {
         return victim;
     }
 
+    public void setVictim(Character victim) {
+        this.victim = victim;
+    }
+
     public int getDbnoId() {
         return dbnoId;
+    }
+
+    public void setDbnoId(int dbnoId) {
+        this.dbnoId = dbnoId;
     }
 
     @Override

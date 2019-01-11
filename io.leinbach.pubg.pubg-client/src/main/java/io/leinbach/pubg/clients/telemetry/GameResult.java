@@ -7,42 +7,54 @@ import java.util.StringJoiner;
 
 public class GameResult {
     @JsonProperty("rank")
-    private final int rank;
+    private int rank;
     @JsonProperty("gameResult")
-    private final String gameResult;
+    private String gameResult;
     @JsonProperty("teamId")
-    private final int teamId;
+    private int teamId;
     @JsonProperty("stats")
-    private final Stats stats;
+    private Stats stats;
     @JsonProperty("accountId")
-    private final String accountId;
-
-    public GameResult(int rank, String gameResult, int teamId, Stats stats, String accountId) {
-        this.rank = rank;
-        this.gameResult = gameResult;
-        this.teamId = teamId;
-        this.stats = stats;
-        this.accountId = accountId;
-    }
+    private String accountId;
 
     public int getRank() {
         return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public String getGameResult() {
         return gameResult;
     }
 
+    public void setGameResult(String gameResult) {
+        this.gameResult = gameResult;
+    }
+
     public int getTeamId() {
         return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     public Stats getStats() {
         return stats;
     }
 
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+
     public String getAccountId() {
         return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     @Override

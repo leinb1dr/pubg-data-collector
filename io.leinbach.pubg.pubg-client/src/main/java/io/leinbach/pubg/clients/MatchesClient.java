@@ -3,6 +3,7 @@ package io.leinbach.pubg.clients;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.leinbach.pubg.clients.domain.*;
+import io.leinbach.pubg.clients.telemetry.TelemetryBase;
 import io.leinbach.pubg.domain.MatchDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.leinbach.pubg.constants.Paths.MATCHE;
 
@@ -27,9 +27,11 @@ public class MatchesClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchesClient.class);
 
     private final WebClient webClient;
+    private final ObjectMapper objectMapper;
 
-    public MatchesClient(WebClient webClient) {
+    public MatchesClient(WebClient webClient, ObjectMapper objectMapper) {
         this.webClient = webClient;
+        this.objectMapper = objectMapper;
     }
 
     public Mono<MatchDto> getMatch(String matchId) {
@@ -46,7 +48,7 @@ public class MatchesClient {
                 }, new MatchData())
 
 //                .flatMapMany(matchData -> Flux.fromIterable(matchData.getData()))
-                .flatMap(matchData -> {
+                .map(matchData -> {
                     LOGGER.info(matchData.toString());
                     MatchEntity matchEntity = matchData.getData();
                     List<? extends PubgEntity> included = matchData.getIncluded();
@@ -61,25 +63,10 @@ public class MatchesClient {
 
                     AssetEntity assetEntity = (AssetEntity) included.get(i);
                     LOGGER.info(assetEntity.toString());
-
-                    return WebClient.create()
-                            .get()
-                            .uri(assetEntity.getAttributes().getUrl())
-                            .retrieve()
-                            .bodyToFlux(Map.class)
-                            .doOnEach(map -> {
-                                try {
-                                    LOGGER.info(new ObjectMapper().writerWithDefaultPrettyPrinter()
-                                            .writeValueAsString(map.get()));
-                                } catch (JsonProcessingException e) {
-                                    e.printStackTrace();
-                                }
-                            })
-                            .collectList()
-                            .map(ignore->matchEntity);
-
-                })
-                .map(MatchEntity::to);
+                    return matchEntity.to()
+                            .telemetryUrl(assetEntity.getAttributes()
+                                    .getUrl());
+                });
     }
 
 }

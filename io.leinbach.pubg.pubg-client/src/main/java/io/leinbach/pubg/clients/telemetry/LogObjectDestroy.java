@@ -8,22 +8,24 @@ import java.util.StringJoiner;
 
 public class LogObjectDestroy extends LogPlayerOnlyEvent {
     @JsonProperty("objectType")
-    private final String objectType;
+    private String objectType;
     @JsonProperty("objectLocation")
-    private final Location objectLocation;
-
-    public LogObjectDestroy(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, String objectType, Location objectLocation) {
-        super(eventTimestamp, eventType, common, character);
-        this.objectType = objectType;
-        this.objectLocation = objectLocation;
-    }
+    private Location objectLocation;
 
     public String getObjectType() {
         return objectType;
     }
 
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
+    }
+
     public Location getObjectLocation() {
         return objectLocation;
+    }
+
+    public void setObjectLocation(Location objectLocation) {
+        this.objectLocation = objectLocation;
     }
 
     @Override

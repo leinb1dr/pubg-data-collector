@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,19 +9,33 @@ import java.util.StringJoiner;
 
 public class LogItemInteract extends LogPlayerOnlyEvent {
     @JsonProperty("item")
-    private final Item item;
+    protected Item item;
     @JsonProperty("ownerTeamId")
-    private final int ownerTeamId;
+    protected int ownerTeamId;
 
-    public LogItemInteract(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, Item item, int ownerTeamId) {
-        super(eventTimestamp, eventType, common,character);
-        this.item = item;
-        this.ownerTeamId = ownerTeamId;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .item(item.to())
+                .ownerTeamId(ownerTeamId);
     }
 
     public int getOwnerTeamId() {
         return ownerTeamId;
     }
+
+    public void setOwnerTeamId(int ownerTeamId) {
+        this.ownerTeamId = ownerTeamId;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -47,10 +62,6 @@ public class LogItemInteract extends LogPlayerOnlyEvent {
                 .add("eventType=" + eventType)
                 .add("common=" + common)
                 .toString();
-    }
-
-    public Item getItem() {
-        return item;
     }
 
 }

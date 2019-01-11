@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,15 +9,20 @@ import java.util.StringJoiner;
 
 public class LogParachuteLanding extends LogPlayerOnlyEvent {
     @JsonProperty("distance")
-    private final double distance;
+    private double distance;
 
-    public LogParachuteLanding(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, double distance) {
-        super(eventTimestamp, eventType, common, character);
-        this.distance = distance;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .distance(distance);
     }
 
     public double getDistance() {
         return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override

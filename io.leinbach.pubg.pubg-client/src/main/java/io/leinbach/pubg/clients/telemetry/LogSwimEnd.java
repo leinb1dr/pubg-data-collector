@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,22 +9,30 @@ import java.util.StringJoiner;
 
 public class LogSwimEnd extends LogPlayerOnlyEvent {
     @JsonProperty("swimDistance")
-    private final double swimDistance;
+    private double swimDistance;
     @JsonProperty("maxSwimDepthOfWater")
-    private final double maxSwimDepthOfWater;
+    private double maxSwimDepthOfWater;
 
-    public LogSwimEnd(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, double swimDistance, double maxSwimDepthOfWater) {
-        super(eventTimestamp, eventType, common, character);
-        this.swimDistance = swimDistance;
-        this.maxSwimDepthOfWater = maxSwimDepthOfWater;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .distance(swimDistance);
     }
 
     public double getSwimDistance() {
         return swimDistance;
     }
 
+    public void setSwimDistance(double swimDistance) {
+        this.swimDistance = swimDistance;
+    }
+
     public double getMaxSwimDepthOfWater() {
         return maxSwimDepthOfWater;
+    }
+
+    public void setMaxSwimDepthOfWater(double maxSwimDepthOfWater) {
+        this.maxSwimDepthOfWater = maxSwimDepthOfWater;
     }
 
     @Override

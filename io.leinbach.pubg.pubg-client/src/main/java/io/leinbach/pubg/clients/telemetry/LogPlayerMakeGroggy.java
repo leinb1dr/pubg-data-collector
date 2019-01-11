@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,22 +10,34 @@ import java.util.StringJoiner;
 
 public class LogPlayerMakeGroggy extends LogPlayerTakeDamage {
     @JsonProperty("isAttackerInVehicle")
-    private final boolean attackerInVehicle;
+    private boolean attackerInVehicle;
     @JsonProperty("dBNOId")
-    private final int dbnoId;
+    private int dbnoId;
 
-    public LogPlayerMakeGroggy(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, int attackId, Character attacker, Character victim, DamageTypeCategory damageTypeCategory, DamageReason damageReason, DamageCauserName damageCauserName, List<String> damageCauserAdditionalInfo, double distance, boolean attackerInVehicle, int dbnoId) {
-        super(eventTimestamp, eventType, common, attackId, attacker, victim, damageTypeCategory, damageReason, damageCauserName, damageCauserAdditionalInfo, distance);
-        this.attackerInVehicle = attackerInVehicle;
-        this.dbnoId = dbnoId;
+    @Override
+    public EventDto to() {
+        EventDto to = super.to()
+                .dbnoId(dbnoId);
+        to.getCharacter()
+                .attackerInVehicle(attackerInVehicle);
+
+        return to;
     }
 
     public boolean isAttackerInVehicle() {
         return attackerInVehicle;
     }
 
+    public void setAttackerInVehicle(boolean attackerInVehicle) {
+        this.attackerInVehicle = attackerInVehicle;
+    }
+
     public int getDbnoId() {
         return dbnoId;
+    }
+
+    public void setDbnoId(int dbnoId) {
+        this.dbnoId = dbnoId;
     }
 
     @Override

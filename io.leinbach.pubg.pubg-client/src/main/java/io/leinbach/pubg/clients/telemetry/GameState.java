@@ -1,90 +1,136 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.GameStateDto;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class GameState {
     @JsonProperty("elapsedTime")
-    private final int elapsedTime;
+    private int elapsedTime;
     @JsonProperty("numAliveTeams")
-    private final int numAliveTeams;
+    private int numAliveTeams;
     @JsonProperty("numJoinPlayers")
-    private final int numJoinPlayers;
+    private int numJoinPlayers;
     @JsonProperty("numStartPlayers")
-    private final int numStartPlayers;
+    private int numStartPlayers;
     @JsonProperty("numAlivePlayers")
-    private final int numAlivePlayers;
+    private int numAlivePlayers;
     @JsonProperty("safetyZonePosition")
-    private final Location safetyZonePosition;
+    private Location safetyZonePosition;
     @JsonProperty("safetyZoneRadius")
-    private final double safetyZoneRadius;
+    private double safetyZoneRadius;
     @JsonProperty("poisonGasWarningPosition")
-    private final Location poisonGasWarningPosition;
+    private Location poisonGasWarningPosition;
     @JsonProperty("poisonGasWarningRadius")
-    private final double poisonGasWarningRadius;
+    private double poisonGasWarningRadius;
     @JsonProperty("redZonePosition")
-    private final Location redZonePosition;
+    private Location redZonePosition;
     @JsonProperty("redZoneRadius")
-    private final double redZoneRadius;
-
-    public GameState(int elapsedTime, int numAliveTeams, int numJoinPlayers, int numStartPlayers, int numAlivePlayers, Location safetyZonePosition, double safetyZoneRadius, Location poisonGasWarningPosition, double poisonGasWarningRadius, Location redZonePosition, double redZoneRadius) {
-        this.elapsedTime = elapsedTime;
-        this.numAliveTeams = numAliveTeams;
-        this.numJoinPlayers = numJoinPlayers;
-        this.numStartPlayers = numStartPlayers;
-        this.numAlivePlayers = numAlivePlayers;
-        this.safetyZonePosition = safetyZonePosition;
-        this.safetyZoneRadius = safetyZoneRadius;
-        this.poisonGasWarningPosition = poisonGasWarningPosition;
-        this.poisonGasWarningRadius = poisonGasWarningRadius;
-        this.redZonePosition = redZonePosition;
-        this.redZoneRadius = redZoneRadius;
-    }
+    private double redZoneRadius;
 
     public int getElapsedTime() {
         return elapsedTime;
+    }
+
+    public void setElapsedTime(int elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 
     public int getNumAliveTeams() {
         return numAliveTeams;
     }
 
+    public void setNumAliveTeams(int numAliveTeams) {
+        this.numAliveTeams = numAliveTeams;
+    }
+
     public int getNumJoinPlayers() {
         return numJoinPlayers;
+    }
+
+    public void setNumJoinPlayers(int numJoinPlayers) {
+        this.numJoinPlayers = numJoinPlayers;
     }
 
     public int getNumStartPlayers() {
         return numStartPlayers;
     }
 
+    public void setNumStartPlayers(int numStartPlayers) {
+        this.numStartPlayers = numStartPlayers;
+    }
+
     public int getNumAlivePlayers() {
         return numAlivePlayers;
+    }
+
+    public void setNumAlivePlayers(int numAlivePlayers) {
+        this.numAlivePlayers = numAlivePlayers;
     }
 
     public Location getSafetyZonePosition() {
         return safetyZonePosition;
     }
 
+    public void setSafetyZonePosition(Location safetyZonePosition) {
+        this.safetyZonePosition = safetyZonePosition;
+    }
+
     public double getSafetyZoneRadius() {
         return safetyZoneRadius;
+    }
+
+    public void setSafetyZoneRadius(double safetyZoneRadius) {
+        this.safetyZoneRadius = safetyZoneRadius;
     }
 
     public Location getPoisonGasWarningPosition() {
         return poisonGasWarningPosition;
     }
 
+    public void setPoisonGasWarningPosition(Location poisonGasWarningPosition) {
+        this.poisonGasWarningPosition = poisonGasWarningPosition;
+    }
+
     public double getPoisonGasWarningRadius() {
         return poisonGasWarningRadius;
+    }
+
+    public void setPoisonGasWarningRadius(double poisonGasWarningRadius) {
+        this.poisonGasWarningRadius = poisonGasWarningRadius;
     }
 
     public Location getRedZonePosition() {
         return redZonePosition;
     }
 
+    public void setRedZonePosition(Location redZonePosition) {
+        this.redZonePosition = redZonePosition;
+    }
+
     public double getRedZoneRadius() {
         return redZoneRadius;
+    }
+
+    public void setRedZoneRadius(double redZoneRadius) {
+        this.redZoneRadius = redZoneRadius;
+    }
+
+    public GameStateDto to() {
+        return new GameStateDto()
+                .elapsedTime(elapsedTime)
+                .numAlivePlayers(numAlivePlayers)
+                .numAliveTeams(numAliveTeams)
+                .numJoinPlayers(numJoinPlayers)
+                .numStartPlayers(numStartPlayers)
+                .poisonGasWarningPosition(poisonGasWarningPosition.to())
+                .poisonGasWarningRadius(poisonGasWarningRadius)
+                .redZonePosition(redZonePosition.to())
+                .redZoneRadius(redZoneRadius)
+                .safetyZonePosition(safetyZonePosition.to())
+                .safetyZoneRadius(safetyZoneRadius);
     }
 
     @Override

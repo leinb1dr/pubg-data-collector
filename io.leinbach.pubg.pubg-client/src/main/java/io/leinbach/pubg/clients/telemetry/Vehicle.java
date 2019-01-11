@@ -1,41 +1,59 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.VehicleDto;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Vehicle {
     @JsonProperty("vehicleType")
-    private final String vehicleType;
+    private String vehicleType;
     @JsonProperty("vehicleId")
-    private final String vehicleId;
+    private String vehicleId;
     @JsonProperty("healthPercentage")
-    private final double healthPercentage;
+    private double healthPercentage;
     @JsonProperty("feulPercentage")
-    private final double fuelPercentage;
+    private double fuelPercentage;
 
-    public Vehicle(String vehicleType, String vehicleId, double healthPercentage, double fuelPercentage) {
-        this.vehicleType = vehicleType;
-        this.vehicleId = vehicleId;
-        this.healthPercentage = healthPercentage;
-        this.fuelPercentage = fuelPercentage;
+    public VehicleDto to(){
+        return new VehicleDto()
+                .vehicleType(vehicleType)
+                .vehicleId(vehicleId)
+                .healthPercentage(healthPercentage)
+                .fuelPercentage(fuelPercentage);
     }
 
     public String getVehicleType() {
         return vehicleType;
     }
 
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
     public String getVehicleId() {
         return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public double getHealthPercentage() {
         return healthPercentage;
     }
 
+    public void setHealthPercentage(double healthPercentage) {
+        this.healthPercentage = healthPercentage;
+    }
+
     public double getFuelPercentage() {
         return fuelPercentage;
+    }
+
+    public void setFuelPercentage(double fuelPercentage) {
+        this.fuelPercentage = fuelPercentage;
     }
 
     @Override

@@ -1,29 +1,28 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LogHeal extends LogPlayerOnlyEvent {
-    @JsonProperty("item")
-    private final Item item;
+public class LogHeal extends LogItemInteract {
     @JsonProperty("healAmount")
-    private final double healAmount;
+    private double healAmount;
 
-    public LogHeal(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, Item item, double healAmount) {
-        super(eventTimestamp, eventType, common, character);
-        this.item = item;
-        this.healAmount = healAmount;
-    }
-
-    public Item getItem() {
-        return item;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .healAmount(healAmount);
     }
 
     public double getHealAmount() {
         return healAmount;
+    }
+
+    public void setHealAmount(double healAmount) {
+        this.healAmount = healAmount;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package io.leinbach.pubg.clients.telemetry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.leinbach.pubg.domain.EventDto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,22 +9,31 @@ import java.util.StringJoiner;
 
 public class LogItemAttachDetach extends LogPlayerOnlyEvent {
     @JsonProperty("parentItem")
-    private final Item parentItem;
+    private Item parentItem;
     @JsonProperty("childItem")
-    private final Item childItem;
+    private Item childItem;
 
-    public LogItemAttachDetach(LocalDateTime eventTimestamp, EventType eventType, TelemetryCommon common, Character character, Item parentItem, Item childItem) {
-        super(eventTimestamp, eventType, common, character);
-        this.parentItem = parentItem;
-        this.childItem = childItem;
+    @Override
+    public EventDto to() {
+        return super.to()
+                .item(parentItem.to())
+                .attachment((childItem.to()));
     }
 
     public Item getParentItem() {
         return parentItem;
     }
 
+    public void setParentItem(Item parentItem) {
+        this.parentItem = parentItem;
+    }
+
     public Item getChildItem() {
         return childItem;
+    }
+
+    public void setChildItem(Item childItem) {
+        this.childItem = childItem;
     }
 
     @Override
