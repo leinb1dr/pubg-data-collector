@@ -9,6 +9,10 @@ debug: true
 #  servlet:
 #    context-path: /ingestor
 
+#logging:
+#  level:
+#    root: error
+
 spring:
   rabbitmq:
     host: 192.168.99.100

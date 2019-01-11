@@ -30,14 +30,6 @@ public class PlayerDto {
     }
 
     @Override
-    public String toString() {
-        return new StringJoiner(", ", PlayerDto.class.getSimpleName() + "[", "]")
-                .add("name='" + name + "'")
-                .add("id='" + id + "'")
-                .toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -68,5 +60,14 @@ public class PlayerDto {
     public PlayerDto id(String id) {
         this.id = id;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", PlayerDto.class.getSimpleName() + "[", "]")
+                .add("name='" + name + "'")
+                .add("id='" + id + "'")
+                .add("matches=" + matches)
+                .toString();
     }
 }

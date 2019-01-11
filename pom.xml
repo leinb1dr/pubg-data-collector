@@ -29,5 +29,22 @@
         <module>io.leinbach.pubg.ingestor-consumer</module>
     </modules>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!--<version>3.8.0</version>-->
+                <!--<inherited>true</inherited>-->
+                <configuration>
+                    <parameters>true</parameters>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

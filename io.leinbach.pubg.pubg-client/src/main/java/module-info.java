@@ -24,6 +24,7 @@ module pubg.client {
     exports io.leinbach.pubg.config to pubg.application ;
 
     opens io.leinbach.pubg.clients.domain to spring.core, com.fasterxml.jackson.databind;
+    opens io.leinbach.pubg.clients.telemetry to spring.core, com.fasterxml.jackson.databind;
     opens io.leinbach.pubg.clients to spring.core;
     opens io.leinbach.pubg.config to spring.boot, spring.core, spring.beans, spring.context;
 }
