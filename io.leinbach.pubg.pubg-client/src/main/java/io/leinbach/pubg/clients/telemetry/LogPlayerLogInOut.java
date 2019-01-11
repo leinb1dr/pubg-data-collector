@@ -12,7 +12,7 @@ public class LogPlayerLogInOut extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto()
+        return super.to()
                 .accountId(accountId);
     }
 

@@ -25,7 +25,7 @@ public class LogPlayerAttack extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto()
+        return super.to()
                 .attackId(attackId)
                 .character(attacker.to())
                 .item(weapon.to())

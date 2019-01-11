@@ -13,7 +13,7 @@ public class LogGameStatePeriodic extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto().gameState(gameState.to());
+        return super.to().gameState(gameState.to());
     }
 
     public GameState getGameState() {

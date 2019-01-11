@@ -14,7 +14,7 @@ public class LogMatchEnd extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto();
+        return super.to();
     }
 
     public List<Character> getCharacters() {

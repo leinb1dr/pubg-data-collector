@@ -21,7 +21,7 @@ public class LogPlayerOnlyEvent extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto().character(character.to());
+        return super.to().character(character.to());
     }
 
     @Override

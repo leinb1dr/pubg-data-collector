@@ -1,5 +1,6 @@
 package io.leinbach.pubg.domain;
 
+import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
 /**
@@ -7,6 +8,8 @@ import java.util.StringJoiner;
  * @since 1/9/2019
  */
 public class EventDto {
+    private LocalDateTime timestamp;
+    private String eventName;
     private String accountId;
     private int attackId;
     private int dbnoId;
@@ -27,6 +30,23 @@ public class EventDto {
     private double distance;
     private double elapsedTime;
 
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public EventDto timestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public EventDto eventName(String eventName) {
+        this.eventName = eventName;
+        return this;
+    }
 
     public double getElapsedTime() {
         return elapsedTime;

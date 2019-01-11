@@ -18,7 +18,7 @@ public class LogPlayerRevive extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto()
+        return super.to()
                 .character(reviver.to())
                 .target(victim.to())
                 .dbnoId(dbnoId);

@@ -21,7 +21,7 @@ public class LogCarePackage extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto()
+        return super.to()
                 .itemPackage(itemPackage.to());
     }
 

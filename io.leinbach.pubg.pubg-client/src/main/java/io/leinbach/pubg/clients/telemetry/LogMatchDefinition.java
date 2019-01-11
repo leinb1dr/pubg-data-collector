@@ -18,7 +18,7 @@ public class LogMatchDefinition extends TelemetryBase {
 
     @Override
     public EventDto to() {
-        return new EventDto()
+        return super.to()
                 .matchId(matchId)
                 .pingQuality(pingQuality)
                 .seasonState(seasonState);

@@ -96,7 +96,10 @@ public abstract class TelemetryBase {
                 Objects.equals(common, that.common);
     }
 
-    public abstract EventDto to();
+    public EventDto to(){
+        return new EventDto().timestamp(eventTimestamp)
+                .eventName(eventType.name());
+    }
 
     @Override
     public int hashCode() {

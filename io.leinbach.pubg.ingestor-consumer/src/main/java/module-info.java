@@ -11,6 +11,8 @@ module pubg.ingestor.consumer {
 
     requires ingester.domain;
     requires pubg.client;
+    requires pubg.data;
+
     requires reactor.core;
     requires org.reactivestreams;
 
