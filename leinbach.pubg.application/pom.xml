@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.leinbach.pubg</groupId>
+        <groupId>io.leinbach.pubg.ingestor</groupId>
         <artifactId>pubg-ingestor</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -22,13 +22,13 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.leinbach.pubg</groupId>
+            <groupId>io.leinbach.pubg.ingestor</groupId>
             <artifactId>pubg-ingestor-rest</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.leinbach.pubg</groupId>
-            <artifactId>pubg-ingestor-consumer</artifactId>
+            <groupId>io.leinbach.pubg.ingestor.consumers</groupId>
+            <artifactId>pubg-match-consumer</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

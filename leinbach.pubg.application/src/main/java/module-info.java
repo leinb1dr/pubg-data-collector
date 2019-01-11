@@ -20,7 +20,7 @@ module leinbach.pubg.application {
     requires com.fasterxml.jackson.datatype.jdk8;
 
     requires leinbach.pubg.ingestor.rest;
-    requires leinbach.pubg.ingestor.consumer;
+    requires leinbach.pubg.ingestor.consumer.match;
     requires jackson.annotations;
 
     opens io.leinbach.pubg.ingestor to spring.boot, spring.core, spring.beans, spring.context;

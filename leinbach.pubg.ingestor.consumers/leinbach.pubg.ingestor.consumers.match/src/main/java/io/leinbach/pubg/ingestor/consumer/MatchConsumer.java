@@ -3,7 +3,6 @@ package io.leinbach.pubg.ingestor.consumer;
 import io.leinbach.pubg.clients.MatchesClient;
 import io.leinbach.pubg.clients.TelemetryClient;
 import io.leinbach.pubg.data.dao.AttackEventDao;
-import io.leinbach.pubg.domain.EventDto;
 import io.leinbach.pubg.domain.MatchDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

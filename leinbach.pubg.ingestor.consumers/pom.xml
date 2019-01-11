@@ -4,12 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>pubg-ingestor</artifactId>
-        <groupId>io.leinbach.pubg</groupId>
+        <groupId>io.leinbach.pubg.ingestor</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>pubg-ingestor-consumer</artifactId>
+    <groupId>io.leinbach.pubg.ingestor.consumers</groupId>
+    <artifactId>pubg-ingestor-consumers</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>leinbach.pubg.ingestor.consumers.match</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -17,17 +22,17 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.leinbach.pubg</groupId>
+            <groupId>io.leinbach.pubg.ingestor</groupId>
             <artifactId>pubg-ingestor-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.leinbach.pubg</groupId>
+            <groupId>io.leinbach.pubg.ingestor</groupId>
             <artifactId>pubg-client</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.leinbach.pubg</groupId>
+            <groupId>io.leinbach.pubg.ingestor</groupId>
             <artifactId>pubg-ingestor-data</artifactId>
             <version>${project.version}</version>
         </dependency>

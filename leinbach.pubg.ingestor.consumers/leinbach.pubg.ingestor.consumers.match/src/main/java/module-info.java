@@ -2,7 +2,7 @@
  * @author leinb
  * @since 1/6/2019
  */
-module leinbach.pubg.ingestor.consumer {
+module leinbach.pubg.ingestor.consumer.match {
 
     requires spring.context;
     requires spring.rabbit;
