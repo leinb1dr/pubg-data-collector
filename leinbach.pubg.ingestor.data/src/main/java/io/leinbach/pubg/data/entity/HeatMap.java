@@ -4,20 +4,17 @@ import io.leinbach.pubg.domain.AttackDto;
 import io.leinbach.pubg.domain.CharacterDto;
 import io.leinbach.pubg.domain.EventDto;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author leinb
  * @since 1/10/2019
  */
-@Table("damagePlayer")
-public class DamagePlayer {
+@Table("heatMap")
+public class HeatMap {
 
     @PrimaryKeyColumn(ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private String matchId;
@@ -31,10 +28,10 @@ public class DamagePlayer {
     private String character_name;
     private double damage;
 
-    public DamagePlayer() {
+    public HeatMap() {
     }
 
-    public DamagePlayer(String matchId, String character_accountId, String damageReason, LocalDateTime eventTimestamp, int attackId, String character_name, double damage) {
+    public HeatMap(String matchId, String character_accountId, String damageReason, LocalDateTime eventTimestamp, int attackId, String character_name, double damage) {
         this.matchId = matchId;
         this.character_accountId = character_accountId;
         this.damageReason = damageReason;
@@ -44,11 +41,11 @@ public class DamagePlayer {
         this.damage = damage;
     }
 
-    public static DamagePlayer from(EventDto eventDto) {
+    public static HeatMap from(EventDto eventDto) {
         CharacterDto character = eventDto.getCharacter();
         AttackDto attack = eventDto.getAttack();
 
-        return new DamagePlayer()
+        return new HeatMap()
                 .matchId(eventDto.getMatchId())
                 .character_accountId(character.getAccountId())
                 .damageReason(attack.getDamageReason())
@@ -64,7 +61,7 @@ public class DamagePlayer {
         return matchId;
     }
 
-    public DamagePlayer matchId(String matchId) {
+    public HeatMap matchId(String matchId) {
         this.matchId = matchId;
         return this;
     }
@@ -73,7 +70,7 @@ public class DamagePlayer {
         return character_accountId;
     }
 
-    public DamagePlayer character_accountId(String character_accountId) {
+    public HeatMap character_accountId(String character_accountId) {
         this.character_accountId = character_accountId;
         return this;
     }
@@ -82,7 +79,7 @@ public class DamagePlayer {
         return damageReason;
     }
 
-    public DamagePlayer damageReason(String damageReason) {
+    public HeatMap damageReason(String damageReason) {
         this.damageReason = damageReason;
         return this;
     }
@@ -91,7 +88,7 @@ public class DamagePlayer {
         return eventTimestamp;
     }
 
-    public DamagePlayer eventTimestamp(LocalDateTime eventTimestamp) {
+    public HeatMap eventTimestamp(LocalDateTime eventTimestamp) {
         this.eventTimestamp = eventTimestamp;
         return this;
     }
@@ -100,7 +97,7 @@ public class DamagePlayer {
         return attackId;
     }
 
-    public DamagePlayer attackId(int attackId) {
+    public HeatMap attackId(int attackId) {
         this.attackId = attackId;
         return this;
     }
@@ -109,7 +106,7 @@ public class DamagePlayer {
         return character_name;
     }
 
-    public DamagePlayer character_name(String character_name) {
+    public HeatMap character_name(String character_name) {
         this.character_name = character_name;
         return this;
     }
@@ -118,7 +115,7 @@ public class DamagePlayer {
         return damage;
     }
 
-    public DamagePlayer damage(double damage) {
+    public HeatMap damage(double damage) {
         this.damage = damage;
         return this;
     }

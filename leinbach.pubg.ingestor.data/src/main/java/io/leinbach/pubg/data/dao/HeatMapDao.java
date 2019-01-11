@@ -1,6 +1,6 @@
 package io.leinbach.pubg.data.dao;
 
-import io.leinbach.pubg.data.entity.DamagePlayer;
+import io.leinbach.pubg.data.entity.HeatMap;
 import io.leinbach.pubg.domain.EventDto;
 import org.springframework.data.cassandra.core.ReactiveCassandraOperations;
 import org.springframework.stereotype.Component;
@@ -11,15 +11,15 @@ import reactor.core.publisher.Mono;
  * @since 1/10/2019
  */
 @Component
-public class AttackEventDao {
+public class HeatMapDao {
     private final ReactiveCassandraOperations operations;
 
-    public AttackEventDao(ReactiveCassandraOperations operations) {
+    public HeatMapDao(ReactiveCassandraOperations operations) {
         this.operations = operations;
     }
 
-    public Mono<EventDto> createEvent(EventDto eventDto) {
-        return operations.insert(DamagePlayer.from(eventDto))
+    public Mono<EventDto> saveHeatmap(EventDto eventDto) {
+        return operations.insert(HeatMap.from(eventDto))
                 .map(event->eventDto);
     }
 }

@@ -1,6 +1,6 @@
 package io.leinbach.pubg.ingestor.consumer.heatmap;
 
-import io.leinbach.pubg.data.dao.AttackEventDao;
+import io.leinbach.pubg.data.dao.HeatMapDao;
 import io.leinbach.pubg.domain.EventDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +17,10 @@ public class HeatMapConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HeatMapConsumer.class);
 
-    private final AttackEventDao attackEventDao;
+    private final HeatMapDao heatMapDao;
 
-    public HeatMapConsumer(AttackEventDao attackEventDao) {
-        this.attackEventDao = attackEventDao;
+    public HeatMapConsumer(HeatMapDao heatMapDao) {
+        this.heatMapDao = heatMapDao;
     }
 
 
@@ -30,7 +30,7 @@ public class HeatMapConsumer {
 
         Mono.just(eventDto)
                 .filter(event->event.getCharacter()!=null && event.getCharacter().getAccountId()!=null)
-                .flatMap(attackEventDao::createEvent)
+                .flatMap(heatMapDao::saveHeatmap)
                 .block();
         LOGGER.info("COMPLETE");
 

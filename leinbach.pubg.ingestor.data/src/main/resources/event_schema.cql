@@ -16,7 +16,7 @@ CREATE TYPE pubg.character(
     zone set<text>
 )
 
-CREATE TABLE pubg.damagePlayer(
+CREATE TABLE pubg.heatMap(
     matchId text,
     character_accountId text,
     damageReason text,
@@ -25,5 +25,5 @@ CREATE TABLE pubg.damagePlayer(
     character_name text,
     damage double,
 
-    PRIMARY KEY ((character_accountId, matchId),damageReason,eventTimestamp)
+    PRIMARY KEY ((character_accountId, matchId), attackId, damageReason, eventTimestamp)
 );
