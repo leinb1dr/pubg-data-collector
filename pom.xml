@@ -21,12 +21,12 @@
     </properties>
 
     <modules>
-        <module>io.leinbach.pubg.application</module>
-        <module>io.leinbach.pubg.ingestor-rest</module>
-        <module>io.leinbach.pubg.pubg-client</module>
-        <module>io.leinbach.pubg.pubg-data</module>
-        <module>io.leinbach.pubg.ingester-domain</module>
-        <module>io.leinbach.pubg.ingestor-consumer</module>
+        <module>leinbach.pubg.application</module>
+        <module>leinbach.pubg.ingestor.rest</module>
+        <module>leinbach.pubg.client</module>
+        <module>leinbach.pubg.ingestor.data</module>
+        <module>leinbach.pubg.ingestor.domain</module>
+        <module>leinbach.pubg.ingestor.consumer</module>
     </modules>
 
     <build>
