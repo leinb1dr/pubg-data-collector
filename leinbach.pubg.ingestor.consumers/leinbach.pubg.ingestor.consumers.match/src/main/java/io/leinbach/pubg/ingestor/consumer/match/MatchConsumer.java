@@ -1,8 +1,7 @@
-package io.leinbach.pubg.ingestor.consumer;
+package io.leinbach.pubg.ingestor.consumer.match;
 
 import io.leinbach.pubg.clients.MatchesClient;
 import io.leinbach.pubg.clients.TelemetryClient;
-import io.leinbach.pubg.data.dao.AttackEventDao;
 import io.leinbach.pubg.domain.MatchDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +21,11 @@ public class MatchConsumer {
 
     private final MatchesClient matchClient;
     private final TelemetryClient telemetryClient;
-    private final AttackEventDao attackEventDao;
     private final AmqpTemplate amqpTemplate;
 
-    public MatchConsumer(MatchesClient matchClient, TelemetryClient telemetryClient, AttackEventDao attackEventDao, AmqpTemplate amqpTemplate) {
+    public MatchConsumer(MatchesClient matchClient, TelemetryClient telemetryClient, AmqpTemplate amqpTemplate) {
         this.matchClient = matchClient;
         this.telemetryClient = telemetryClient;
-        this.attackEventDao = attackEventDao;
         this.amqpTemplate = amqpTemplate;
     }
 
@@ -38,7 +35,6 @@ public class MatchConsumer {
         matchClient.getMatch(matchDto.getId())
                 .flatMapMany(matchData -> telemetryClient.getMatch(matchData.getTelemetryUrl())
                         .map(eventDto -> eventDto.matchId(matchData.getId())))
-//                .take(10)
                 .flatMap(eventDto -> Mono.fromCallable(()->{
                     amqpTemplate.convertAndSend(
                             "event.processing",
@@ -47,7 +43,6 @@ public class MatchConsumer {
                     return true;
                 }))
                 .blockLast();
-//                .subscribe(LOGGER::debug, throwable -> LOGGER.error("failed", throwable), ()->LOGGER.info("Complete"));
         LOGGER.info("COMPLETE");
 
     }

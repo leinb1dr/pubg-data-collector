@@ -35,7 +35,7 @@ public class PlayerController {
 
         var clientLookup = playersClient.searchPlayers(player)
                 .flatMap(pubgPlayer -> Flux.fromIterable(pubgPlayer.getMatches())
-//                        .take(1)
+                        .take(1)
                         .flatMap(match -> Mono.fromCallable(() -> {
                             amqpTemplate.convertAndSend(
                                     "match",

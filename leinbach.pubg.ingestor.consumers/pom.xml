@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>leinbach.pubg.ingestor.consumers.match</module>
+        <module>leinbach.pubg.ingestor.consumers.heatmap</module>
     </modules>
 
     <dependencies>
@@ -26,16 +27,8 @@
             <artifactId>pubg-ingestor-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.leinbach.pubg.ingestor</groupId>
-            <artifactId>pubg-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.leinbach.pubg.ingestor</groupId>
-            <artifactId>pubg-ingestor-data</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
+
     </dependencies>
 
 

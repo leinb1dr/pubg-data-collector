@@ -1,7 +1,6 @@
 package io.leinbach.pubg.ingestor;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.SpringApplication;
@@ -18,13 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 public class Application {
 
     @Bean
-    public ParameterNamesModule parameterNamesModule(){
-        return new ParameterNamesModule(JsonCreator.Mode.PROPERTIES);
-    }
-
-    @Bean
-    public MessageConverter jsonMessageConverter(){
-        return new Jackson2JsonMessageConverter();
+    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper){
+        return new Jackson2JsonMessageConverter(objectMapper);
     }
 
     public static void main(String[] args) {
