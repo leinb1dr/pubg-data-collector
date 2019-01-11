@@ -16,31 +16,14 @@ CREATE TYPE pubg.character(
     zone set<text>
 )
 
-CREATE TABLE pubg.attack(
+CREATE TABLE pubg.damagePlayer(
     matchId text,
+    character_accountId text,
+    damageReason text,
     eventTimestamp timestamp,
-    eventType text,
     attackId int,
     character_name text,
-    character_teamId int,
-    character_health double,
-    character_ranking int,
-    character_accountId text,
-    character_isInBlueZone boolean,
-    character_isInRedZone boolean,
-    character_zone set<text>,
-    target_name text,
-    target_teamId int,
-    target_health double,
-    target_ranking int,
-    target_accountId text,
-    target_isInBlueZone boolean,
-    target_isInRedZone boolean,
-    target_zone set<text>,
-    damageTypeCategory text,
-    damageReason text,
-    damageCauserName text,
-    damageCauserNameCategory text,
-    distance double,
-    PRIMARY KEY (matchId)
+    damage double,
+
+    PRIMARY KEY ((matchId,character_accountId),damageReason,eventTimestamp)
 );

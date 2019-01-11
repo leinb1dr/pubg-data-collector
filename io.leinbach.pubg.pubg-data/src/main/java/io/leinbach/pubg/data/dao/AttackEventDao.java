@@ -1,6 +1,6 @@
 package io.leinbach.pubg.data.dao;
 
-import io.leinbach.pubg.data.entity.AttackEvents;
+import io.leinbach.pubg.data.entity.DamagePlayer;
 import io.leinbach.pubg.domain.EventDto;
 import org.springframework.data.cassandra.core.ReactiveCassandraOperations;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class AttackEventDao {
     }
 
     public Mono<EventDto> createEvent(EventDto eventDto) {
-        return operations.insert(AttackEvents.from(eventDto))
+        return operations.insert(DamagePlayer.from(eventDto))
                 .map(event->eventDto);
     }
 }

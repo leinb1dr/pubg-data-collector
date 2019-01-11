@@ -26,10 +26,21 @@ public class LogPlayerTakeDamage extends TelemetryBase {
     protected double distance;
     @JsonProperty("damageCauserAdditionalInfo")
     protected List<String> damageCauserAdditionalInfo;
+    @JsonProperty("damage")
+    protected double damage;
+
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
 
     @Override
     public EventDto to() {
-        return super.to().attackId(attackId)
+        return super.to()
+                .attackId(attackId)
                 .character(attacker != null ? attacker.to() : null)
                 .target(victim.to())
                 .attack(new AttackDto()
@@ -40,6 +51,7 @@ public class LogPlayerTakeDamage extends TelemetryBase {
                                 .toUpperCase())
                         .damageReason(damageReason != null ? damageReason.name() : null)
                         .damageTypeCategory(damageTypeCategory.name())
+                        .damage(damage)
                 );
     }
 

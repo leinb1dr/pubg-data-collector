@@ -35,7 +35,9 @@ public class MatchConsumer {
         matchClient.getMatch(matchDto.getId())
                 .flatMapMany(matchData -> telemetryClient.getMatch(matchData.getTelemetryUrl())
                         .map(eventDto -> eventDto.matchId(matchData.getId())))
-                .take(10)
+//                .take(10)
+                .filter(eventDto -> "LOGPLAYERTAKEDAMAGE".equals(eventDto.getEventName()))
+                .filter(eventDto -> eventDto.getCharacter() != null && eventDto.getCharacter().getAccountId() != null)
                 .flatMap(attackEventDao::createEvent)
                 .map(EventDto::toString)
                 .subscribe(LOGGER::info, throwable -> LOGGER.error("failed", throwable));

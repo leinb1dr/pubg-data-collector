@@ -16,6 +16,16 @@ public class AttackDto {
     private double distance;
     private List<String> damageCauserAdditionalInfo;
     private int fireWeaponStackCount;
+    private double damage;
+
+    public double getDamage() {
+        return damage;
+    }
+
+    public AttackDto damage(double damage) {
+        this.damage = damage;
+        return this;
+    }
 
     public int getFireWeaponStackCount() {
         return fireWeaponStackCount;
