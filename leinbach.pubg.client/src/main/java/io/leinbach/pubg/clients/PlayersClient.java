@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import static io.leinbach.pubg.constants.Paths.PLAYERS;
 import static io.leinbach.pubg.constants.Paths.PLAYER_NAMES_FILTER;
@@ -26,7 +27,7 @@ public class PlayersClient {
         this.webClient = webClient;
     }
 
-    public Flux<PlayerDto> searchPlayers(String playerName) {
+    public Mono<PlayerDto> findPlayer(String playerName) {
         return webClient.get()
                 .uri(PLAYERS + "?" + PLAYER_NAMES_FILTER, Platform.STEAM.getName(), playerName)
                 .header("accept", "application/json")
@@ -39,6 +40,7 @@ public class PlayersClient {
                     return false;
                 }, new PlayerListResult())
                 .flatMapMany(playerListResult -> Flux.fromIterable(playerListResult.getData()))
+                .single()
                 .map(PlayerEntity::to);
     }
 

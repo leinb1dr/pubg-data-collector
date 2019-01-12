@@ -2,6 +2,7 @@ package io.leinbach.pubg.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -15,9 +16,25 @@ public class PlayerDto {
     private String name;
     @JsonProperty
     private String id;
+    @JsonProperty
+    private LocalDateTime lastUpdate;
     private List<MatchDto> matches;
 
     public PlayerDto() {
+    }
+
+    public boolean needsRefresh() {
+        return lastUpdate == null || lastUpdate.isBefore(LocalDateTime.now()
+                .minusMinutes(5));
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public PlayerDto lastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
     }
 
     public List<MatchDto> getMatches() {
@@ -28,21 +45,6 @@ public class PlayerDto {
         this.matches = matches;
         return this;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlayerDto playerDto = (PlayerDto) o;
-        return Objects.equals(name, playerDto.name) &&
-                Objects.equals(id, playerDto.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, id);
-    }
-
 
     public String getName() {
         return name;
@@ -60,6 +62,20 @@ public class PlayerDto {
     public PlayerDto id(String id) {
         this.id = id;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerDto playerDto = (PlayerDto) o;
+        return Objects.equals(name, playerDto.name) &&
+                Objects.equals(id, playerDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id);
     }
 
     @Override
