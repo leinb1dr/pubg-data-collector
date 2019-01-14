@@ -14,6 +14,7 @@ module leinbach.pubg.ingestor.data {
     exports io.leinbach.pubg.data.dao;
 
     exports io.leinbach.pubg.data.entity to leinbach.pubg.ingestor.domain, spring.data.commons;
+    exports io.leinbach.pubg.data.repository to spring.aop;
 
     opens io.leinbach.pubg.data.config to spring.core, spring.context, spring.beans;
     opens io.leinbach.pubg.data.dao to spring.core, spring.context, spring.beans;

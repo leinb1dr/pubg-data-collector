@@ -10,6 +10,7 @@ module leinbach.pubg.ingestor.consumer.match {
     requires slf4j.api;
 
     requires leinbach.pubg.ingestor.domain;
+    requires leinbach.pubg.ingestor.data;
     requires leinbach.pubg.client;
 
     requires reactor.core;

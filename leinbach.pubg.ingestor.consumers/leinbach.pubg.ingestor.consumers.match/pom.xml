@@ -17,6 +17,11 @@
             <artifactId>pubg-client</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.leinbach.pubg.ingestor</groupId>
+            <artifactId>pubg-ingestor-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

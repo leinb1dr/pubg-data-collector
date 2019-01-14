@@ -16,6 +16,28 @@ CREATE TYPE pubg.character(
     zone set<text>
 )
 
+CREATE TABLE pubg.player(
+    playerName text,
+    accountId text,
+    lastUpdated timestamp,
+    PRIMARY KEY (playerName)
+);
+
+CREATE INDEX playerByAccount on pubg.player(accountId);
+
+CREATE TABLE pubg.playerMatch(
+    accountId text,
+    matchId text,
+    playername text,
+    teamId int,
+    rank int,
+    stats map<text, double>,
+    PRIMARY KEY ((accountId), matchId)
+);
+
+create index matchById on pubg.playerMatch(matchId);
+create index matchByTeam on pubg.playerMatch(teamId);
+
 CREATE TABLE pubg.matchProcessing(
     matchId text,
     matchProcessing int,

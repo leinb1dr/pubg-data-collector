@@ -4,6 +4,7 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author leinb
@@ -17,10 +18,10 @@ public class MatchProcessing {
     private final int heatMapProcessing;
     private final LocalDateTime lastUpdated;
 
-    public MatchProcessing(String matchId, int matchProcessing, int heatMapProcessing, LocalDateTime lastUpdated) {
+    public MatchProcessing(String matchId, Integer matchProcessing, Integer heatMapProcessing, LocalDateTime lastUpdated) {
         this.matchId = matchId;
-        this.matchProcessing = matchProcessing;
-        this.heatMapProcessing = heatMapProcessing;
+        this.matchProcessing = Objects.requireNonNullElse(matchProcessing,0);
+        this.heatMapProcessing = Objects.requireNonNullElse(heatMapProcessing, 0);
         this.lastUpdated = lastUpdated;
     }
 

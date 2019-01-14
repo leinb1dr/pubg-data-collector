@@ -29,7 +29,7 @@ public class TelemetryClient {
     }
 
 
-    public Flux<EventDto> getMatch(String url) {
+    public Flux<EventDto> loadTelemetry(String url) {
         return webClient.get()
                 .uri(url)
                 .header("accept", "application/json")

@@ -1,5 +1,7 @@
 package io.leinbach.pubg.domain;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -11,13 +13,45 @@ public class MatchDto {
     private String id;
     private String type;
     private String telemetryUrl;
+    private int rank;
+    private int teamId;
+    private Map<String, Double> stats;
+    private List<ParticipantsDto> participants;
 
-    public MatchDto() {
+    public int getRank() {
+        return rank;
     }
 
-    public MatchDto(String id, String type) {
-        this.id = id;
-        this.type = type;
+    public MatchDto rank(int rank) {
+        this.rank = rank;
+        return this;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public MatchDto teamId(int teamId) {
+        this.teamId = teamId;
+        return this;
+    }
+
+    public Map<String, Double> getStats() {
+        return stats;
+    }
+
+    public MatchDto stats(Map<String, Double> stats) {
+        this.stats = stats;
+        return this;
+    }
+
+    public List<ParticipantsDto> getParticipants() {
+        return participants;
+    }
+
+    public MatchDto participants(List<ParticipantsDto> participants) {
+        this.participants = participants;
+        return this;
     }
 
     public String getTelemetryUrl() {

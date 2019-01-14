@@ -18,6 +18,7 @@ public class PlayerDto {
     private String id;
     @JsonProperty
     private LocalDateTime lastUpdate;
+    @JsonProperty
     private List<MatchDto> matches;
 
     public PlayerDto() {

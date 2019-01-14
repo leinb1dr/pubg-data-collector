@@ -43,4 +43,8 @@ public class PlayerDao {
         return operations.delete(new Player(name, null, null))
                 .map(Player::to);
     }
+
+    public Mono<PlayerDto> getPlayerById(String accountId) {
+        return null;
+    }
 }

@@ -3,6 +3,7 @@ package io.leinbach.pubg.ingestor.controller;
 import io.leinbach.pubg.clients.PlayersClient;
 import io.leinbach.pubg.data.dao.MatchProcessingDao;
 import io.leinbach.pubg.data.dao.PlayerDao;
+import io.leinbach.pubg.data.dao.PlayerMatchDao;
 import io.leinbach.pubg.domain.PlayerDto;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,14 @@ public class PlayerController {
 
     private final PlayersClient playersClient;
     private final PlayerDao playerDao;
+    private final PlayerMatchDao playerMatchDao;
     private final MatchProcessingDao matchProcessingDao;
     private final AmqpTemplate amqpTemplate;
 
-    public PlayerController(PlayersClient playersClient, PlayerDao playerDao, MatchProcessingDao matchProcessingDao, AmqpTemplate amqpTemplate) {
+    public PlayerController(PlayersClient playersClient, PlayerDao playerDao, PlayerMatchDao playerMatchDao, MatchProcessingDao matchProcessingDao, AmqpTemplate amqpTemplate) {
         this.playersClient = playersClient;
         this.playerDao = playerDao;
+        this.playerMatchDao = playerMatchDao;
         this.matchProcessingDao = matchProcessingDao;
         this.amqpTemplate = amqpTemplate;
     }
@@ -34,19 +37,22 @@ public class PlayerController {
     public Mono<PlayerDto> handle(@RequestParam String player) {
 
         return playerDao.getPlayer(player)
-                .switchIfEmpty(
-                        playersClient.findPlayer(player)
+                .switchIfEmpty(playersClient.findPlayer(player)
                                 .flatMap(playerDao::createPlayer))
                 .flatMap(playerDto -> {
                     if (playerDto.needsRefresh()) return refreshPlayer(playerDto);
                     return Mono.just(playerDto);
-                });
+                })
+                .flatMap(playerDto -> playerMatchDao.findMatchesForPlayer(playerDto.getId())
+                        .collectList()
+                        .map(playerDto::matches));
 
     }
 
     private Mono<PlayerDto> refreshPlayer(PlayerDto playerDto) {
         return playersClient.findPlayer(playerDto.getName())
                 .flatMapMany(pubgPlayer -> Flux.fromIterable(pubgPlayer.getMatches()))
+//                .take(1)
                 .flatMap(matchDto -> matchProcessingDao.needsProcessing(matchDto)
                         .flatMap(needsProcessing -> {
                             if (needsProcessing) {
