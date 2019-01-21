@@ -12,6 +12,9 @@ public class MatchEntity extends PubgEntity<MatchAttributes, MatchRelationships>
     public MatchDto to() {
         return new MatchDto()
                 .id(id)
+                .gameMode(attributes != null ? attributes.getGameMode().getCode():null)
+                .matchDate(attributes != null ? attributes.getCreatedAt() :  null)
+                .map(attributes != null ? attributes.getMapName().name() : null)
                 .type(type.name());
     }
 

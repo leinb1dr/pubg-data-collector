@@ -27,12 +27,15 @@ CREATE INDEX playerByAccount on pubg.player(accountId);
 
 CREATE TABLE pubg.playerMatch(
     accountId text,
+    gameMode text,
+    map text,
     matchId text,
+    matchDateTime timestamp,
     playername text,
     teamId int,
     rank int,
     stats text,
-    PRIMARY KEY ((accountId), matchId)
+    PRIMARY KEY ((accountId, gameMode), matchId)
 );
 
 create index matchById on pubg.playerMatch(matchId);

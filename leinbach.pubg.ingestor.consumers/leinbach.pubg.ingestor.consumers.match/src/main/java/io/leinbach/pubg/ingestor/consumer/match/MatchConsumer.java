@@ -43,7 +43,8 @@ public class MatchConsumer {
         Mono<ParticipantsDto> playerMatch = match.flatMapMany(matchData -> Flux.fromIterable(matchData.getParticipants())
                 .map(participantsDto -> participantsDto.map(matchData.getMap())
                         .gameMode(matchData.getGameMode())
-                        .matchDateTime(matchData.getMatchDate())))
+                        .matchDateTime(matchData.getMatchDate())
+                        .map(matchData.getMap())))
                 .flatMap(playerMatchDao::savePlayerMatch)
                 .last();
 

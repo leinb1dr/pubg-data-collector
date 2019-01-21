@@ -13,7 +13,8 @@ import java.util.Map;
 public enum MapName {
     MIRIMAR("Desert_Main"),
     ERANGLE("Erangel_Main"),
-    SANHOK("Savage_Main");
+    SANHOK("Savage_Main"),
+    VIKENDI("DihorOtok_Main");
 
     private final String name;
 

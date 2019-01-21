@@ -12,11 +12,14 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 public class PlayerMatchId {
     @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.PARTITIONED)
     private final String accountId;
+    @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.PARTITIONED)
+    private final String gameMode;
     @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.CLUSTERED)
     private final String matchId;
 
-    public PlayerMatchId(String accountId, String matchId) {
+    public PlayerMatchId(String accountId, String gameMode, String matchId) {
         this.accountId = accountId;
+        this.gameMode = gameMode;
         this.matchId = matchId;
     }
 
@@ -26,5 +29,9 @@ public class PlayerMatchId {
 
     public String getMatchId() {
         return matchId;
+    }
+
+    public String getGameMode() {
+        return gameMode;
     }
 }

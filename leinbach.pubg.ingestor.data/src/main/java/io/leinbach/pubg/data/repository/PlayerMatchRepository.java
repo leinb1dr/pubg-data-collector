@@ -4,6 +4,7 @@ import io.leinbach.pubg.data.entity.PlayerMatch;
 import io.leinbach.pubg.data.entity.PlayerMatchId;
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
@@ -13,6 +14,7 @@ import reactor.core.publisher.Flux;
  */
 @Repository
 public interface PlayerMatchRepository extends ReactiveCassandraRepository<PlayerMatch, PlayerMatchId> {
+    Flux<PlayerMatch> findAllByIdAccountIdAndIdGameMode(String accountId, String gameMode);
     Flux<PlayerMatch> findAllByIdAccountId(String accountId);
 
     @AllowFiltering

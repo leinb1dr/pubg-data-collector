@@ -6,6 +6,7 @@ module leinbach.pubg.ingestor.data {
 
     requires spring.core;
     requires spring.context;
+
     requires spring.data.commons;
     requires spring.data.cassandra;
 

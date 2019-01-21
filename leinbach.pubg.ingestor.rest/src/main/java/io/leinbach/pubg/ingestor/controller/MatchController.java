@@ -7,6 +7,7 @@ import io.leinbach.pubg.domain.PlayerDto;
 import io.leinbach.pubg.ingestor.controller.util.RefreshPlayer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -29,21 +30,21 @@ public class MatchController {
     }
 
     @GetMapping("/player/{accountId}/matches")
-    public Flux<MatchDto> getMatches(@PathVariable String accountId) {
+    public Flux<MatchDto> getMatches(@PathVariable String accountId, @RequestParam(required = false) String gameMode) {
         Mono<PlayerDto> playerById = playerDao.getPlayerById(accountId);
         playerDao.getPlayerById(accountId)
                 .flatMap(playerDto -> {
                     if (playerDto.needsRefresh()) return refreshPlayer.refreshPlayer(playerDto);
                     return Mono.just(playerDto);
                 }).subscribe();
-        return playerMatchDao.findMatchesForPlayer(accountId);
+        return playerMatchDao.findMatchesForPlayer(accountId, gameMode);
     }
 
     @GetMapping("/player/{accountId}/matches/{matchId}")
-    public Mono<MatchDto> getMatch(@PathVariable String accountId, @PathVariable String matchId) {
+    public Mono<MatchDto> getMatch(@PathVariable String accountId, @RequestParam String gameMode, @PathVariable String matchId) {
         Mono<PlayerDto> playerById = playerDao.getPlayerById(accountId);
 
-        return playerMatchDao.getMatch(accountId, matchId)
+        return playerMatchDao.getMatch(accountId, gameMode, matchId)
                 .flatMap(matchDto -> playerMatchDao.findTeamForPlayer(matchId, matchDto.getTeamId())
                         .collectList()
                         .map(matchDto::participants));
