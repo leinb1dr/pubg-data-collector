@@ -62,17 +62,7 @@ public class MatchesClient {
                                     ParticipantEntity participantEntity = (ParticipantEntity) pubgEntity;
                                     ParticipantStats stats = participantEntity.getAttributes()
                                             .getStats();
-                                    Map<String, Object> map = objectMapper.convertValue(stats, Map.class);
-                                    Map<String, Double> mapOfStats = map.entrySet()
-                                            .stream()
-                                            .filter(entry -> (entry.getValue() instanceof Integer) || (entry.getValue() instanceof Double))
-                                            .map(entry -> {
-                                                if (entry.getValue() instanceof Double)
-                                                    return new SimpleEntry<>(entry.getKey(), (Double) entry.getValue());
-                                                return new SimpleEntry<>(entry.getKey(), ((Integer) entry.getValue()).doubleValue());
-                                            })
-                                            .collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
-
+                                    Map<String, Object> mapOfStats = objectMapper.convertValue(stats, Map.class);
 
                                     return Stream.of(new SimpleEntry<>(participantEntity.getId(), new ParticipantsDto()
                                             .matchId(matchEntity.getId())

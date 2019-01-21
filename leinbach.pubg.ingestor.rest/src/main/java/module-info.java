@@ -19,6 +19,7 @@ module leinbach.pubg.ingestor.rest {
     requires leinbach.pubg.ingestor.domain;
 
     exports io.leinbach.pubg.ingestor.controller;
+    exports io.leinbach.pubg.ingestor.controller.util to spring.beans;
 
     opens io.leinbach.pubg.ingestor.controller to spring.webflux,spring.core, spring.context, spring.beans;
 

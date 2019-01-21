@@ -3,10 +3,17 @@
  * @since 12/26/2018
  */
 module leinbach.pubg.ingestor.data {
+
+    requires spring.core;
     requires spring.context;
-    requires reactor.core;
+    requires spring.data.commons;
     requires spring.data.cassandra;
+
+    requires reactor.core;
     requires cassandra.driver.core;
+
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
 
     requires leinbach.pubg.ingestor.domain;
     

@@ -1,14 +1,12 @@
 package io.leinbach.pubg.data.dao;
 
 import io.leinbach.pubg.data.entity.Player;
+import io.leinbach.pubg.data.repository.PlayerRepository;
 import io.leinbach.pubg.domain.PlayerDto;
-import org.springframework.data.cassandra.core.ReactiveCassandraOperations;
-import org.springframework.data.cassandra.core.cql.ReactiveCqlTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import reactor.util.Logger;
+import reactor.util.Loggers;
 
 /**
  * @author leinb
@@ -17,34 +15,32 @@ import java.time.ZoneId;
 @Component
 public class PlayerDao {
 
-    private final ReactiveCassandraOperations operations;
-    private final ReactiveCqlTemplate template;
+    private final Logger LOGGER = Loggers.getLogger(PlayerDao.class);
 
-    public PlayerDao(ReactiveCassandraOperations operations, ReactiveCqlTemplate template) {
-        this.operations = operations;
-        this.template = template;
+    private final PlayerRepository playerRepository;
+
+    public PlayerDao(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
     }
+
 
     public Mono<PlayerDto> getPlayer(String name) {
-//        return operations.selectOne("SELECT * FROM player WHERE username = 'stealthg0d'", Player.class);
-        return template.queryForObject("SELECT * FROM player WHERE playername = ?",
-                (row, rowNum) -> new Player(row.getString("playername"), row.getString("accountid"), LocalDateTime.ofInstant(row.getTimestamp("lastupdated")
-                        .toInstant(), ZoneId.systemDefault())),
-                name)
+        return playerRepository.findById(name)
                 .map(Player::to);
     }
 
-    public Mono<PlayerDto> createPlayer(PlayerDto player) {
-        return operations.insert(new Player(player.getName(),player.getId(),LocalDateTime.now().minusHours(1)))
+    public Mono<PlayerDto> savePlayer(PlayerDto player) {
+        return playerRepository.save(Player.from(player))
                 .map(Player::to);
+//                .doOnError(throwable -> LOGGER.error("failed to save player", throwable));
     }
 
-    public Mono<PlayerDto> deletePlayer(String name) {
-        return operations.delete(new Player(name, null, null))
-                .map(Player::to);
+    public Mono<Void> deletePlayer(String name) {
+        return playerRepository.deleteById(name);
     }
 
     public Mono<PlayerDto> getPlayerById(String accountId) {
-        return null;
+        return playerRepository.findByAccountId(accountId)
+                .map(Player::to);
     }
 }

@@ -26,13 +26,13 @@ public class HeatMapConsumer {
 
     @RabbitListener(queues = "HEAT_MAP",concurrency = "1")
     public void processMatch(EventDto eventDto) {
-        LOGGER.info(eventDto.toString());
+//        LOGGER.info(eventDto.toString());
 
         Mono.just(eventDto)
                 .filter(event->event.getCharacter()!=null && event.getCharacter().getAccountId()!=null)
                 .flatMap(heatMapDao::saveHeatmap)
                 .block();
-        LOGGER.info("COMPLETE");
+//        LOGGER.info("COMPLETE");
 
     }
 }

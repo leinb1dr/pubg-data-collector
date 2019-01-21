@@ -1,5 +1,6 @@
 package io.leinbach.pubg.domain;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -8,11 +9,41 @@ import java.util.Map;
  */
 public class ParticipantsDto {
     private String matchId;
+    private LocalDateTime matchDateTime;
+    private String gameMode;
+    private String map;
     private String accountId;
     private String playerName;
     private int teamId;
     private int rank;
-    private Map<String, Double> stats;
+    private Map<String, Object> stats;
+
+    public LocalDateTime getMatchDateTime() {
+        return matchDateTime;
+    }
+
+    public ParticipantsDto matchDateTime(LocalDateTime matchDate) {
+        this.matchDateTime = matchDate;
+        return this;
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public ParticipantsDto gameMode(String gameMode) {
+        this.gameMode = gameMode;
+        return this;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public ParticipantsDto map(String map) {
+        this.map = map;
+        return this;
+    }
 
     public String getPlayerName() {
         return playerName;
@@ -59,11 +90,11 @@ public class ParticipantsDto {
         return this;
     }
 
-    public Map<String, Double> getStats() {
+    public Map<String, Object> getStats() {
         return stats;
     }
 
-    public ParticipantsDto stats(Map<String, Double> stats) {
+    public ParticipantsDto stats(Map<String, Object> stats) {
         this.stats = stats;
         return this;
     }

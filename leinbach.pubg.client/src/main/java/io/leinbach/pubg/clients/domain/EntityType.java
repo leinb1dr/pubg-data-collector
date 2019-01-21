@@ -12,6 +12,7 @@ import java.util.Map;
  */
 public enum EntityType {
     PLAYER("player"),
+    PLAYER_SEASON("playerSeason"),
     MATCH("match"),
     ROSTER("roster"),
     PARTICIPANT("participant"),

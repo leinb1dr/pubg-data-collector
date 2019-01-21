@@ -1,5 +1,6 @@
 package io.leinbach.pubg.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -13,10 +14,41 @@ public class MatchDto {
     private String id;
     private String type;
     private String telemetryUrl;
+    private String map;
+    private String gameMode;
+    private LocalDateTime matchDate;
     private int rank;
     private int teamId;
-    private Map<String, Double> stats;
+    private Map<String, Object> stats;
     private List<ParticipantsDto> participants;
+
+
+    public String getMap() {
+        return map;
+    }
+
+    public MatchDto map(String map) {
+        this.map = map;
+        return this;
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public MatchDto gameMode(String gameMode) {
+        this.gameMode = gameMode;
+        return this;
+    }
+
+    public LocalDateTime getMatchDate() {
+        return matchDate;
+    }
+
+    public MatchDto matchDate(LocalDateTime matchDate) {
+        this.matchDate = matchDate;
+        return this;
+    }
 
     public int getRank() {
         return rank;
@@ -36,11 +68,11 @@ public class MatchDto {
         return this;
     }
 
-    public Map<String, Double> getStats() {
+    public Map<String, Object> getStats() {
         return stats;
     }
 
-    public MatchDto stats(Map<String, Double> stats) {
+    public MatchDto stats(Map<String, Object> stats) {
         this.stats = stats;
         return this;
     }

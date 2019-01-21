@@ -16,9 +16,9 @@ public class PlayerMatch {
     private final String playerName;
     private final int teamId;
     private final int rank;
-    private final Map<String, Double> stats;
+    private final Map<String, Object> stats;
 
-    public PlayerMatch(PlayerMatchId id, String playerName, int teamId, int rank, Map<String, Double> stats) {
+    public PlayerMatch(PlayerMatchId id, String playerName, int teamId, int rank, Map<String, Object> stats) {
         this.id = id;
         this.playerName = playerName;
         this.teamId = teamId;
@@ -51,7 +51,7 @@ public class PlayerMatch {
         return rank;
     }
 
-    public Map<String, Double> getStats() {
+    public Map<String, Object> getStats() {
         return stats;
     }
 

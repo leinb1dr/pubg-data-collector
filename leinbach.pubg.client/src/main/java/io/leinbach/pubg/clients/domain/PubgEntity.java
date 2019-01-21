@@ -20,7 +20,8 @@ import java.util.StringJoiner;
         @JsonSubTypes.Type(value=RosterEntity.class, name = "roster"),
         @JsonSubTypes.Type(value=AssetEntity.class, name = "asset"),
         @JsonSubTypes.Type(value= PlayerEntity.class, name = "player"),
-        @JsonSubTypes.Type(value= MatchEntity.class, name = "match")
+        @JsonSubTypes.Type(value= MatchEntity.class, name = "match"),
+        @JsonSubTypes.Type(value = PlayerSeasonEntity.class, name = "playerSeason")
 })
 public abstract class PubgEntity<A extends Attributes, R extends Relationships> {
     @JsonProperty("type")

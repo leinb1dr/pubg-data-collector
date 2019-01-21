@@ -20,8 +20,19 @@ public class PlayerDto {
     private LocalDateTime lastUpdate;
     @JsonProperty
     private List<MatchDto> matches;
+    @JsonProperty
+    private SeasonStatsDto seasonStats;
 
     public PlayerDto() {
+    }
+
+    public SeasonStatsDto getSeasonStats() {
+        return seasonStats;
+    }
+
+    public PlayerDto seasonStats(SeasonStatsDto seasonStats) {
+        this.seasonStats = seasonStats;
+        return this;
     }
 
     public boolean needsRefresh() {

@@ -11,7 +11,7 @@
 
 logging:
   level:
-    root: info
+    root: debug
 
 spring:
   rabbitmq:
@@ -19,6 +19,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+  jackson:
+    serialization:
+      fail_on_empty_beans: false
 
 management:
   endpoint:

@@ -34,12 +34,16 @@ public class MatchConsumer {
         this.amqpTemplate = amqpTemplate;
     }
 
-    @RabbitListener(queues = "MATCH",concurrency = "1")
+    @RabbitListener(queues = "MATCH", concurrency = "1")
     public void processMatch(MatchDto matchDto) {
         LOGGER.info(matchDto.toString());
-        Mono<MatchDto> match = matchClient.getMatch(matchDto.getId()).cache();
+        Mono<MatchDto> match = matchClient.getMatch(matchDto.getId())
+                .cache();
 
-        Mono<ParticipantsDto> playerMatch = match.flatMapMany(matchData -> Flux.fromIterable(matchData.getParticipants()))
+        Mono<ParticipantsDto> playerMatch = match.flatMapMany(matchData -> Flux.fromIterable(matchData.getParticipants())
+                .map(participantsDto -> participantsDto.map(matchData.getMap())
+                        .gameMode(matchData.getGameMode())
+                        .matchDateTime(matchData.getMatchDate())))
                 .flatMap(playerMatchDao::savePlayerMatch)
                 .last();
 
@@ -54,7 +58,7 @@ public class MatchConsumer {
                 }))
                 .last();
 
-        playerMatch.zipWith(processEvents, (first,second)->true)
+        playerMatch.zipWith(processEvents, (first, second) -> true)
                 .block();
 
         LOGGER.info("COMPLETE");

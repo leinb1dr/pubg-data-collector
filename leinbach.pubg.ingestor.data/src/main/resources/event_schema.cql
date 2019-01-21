@@ -31,7 +31,7 @@ CREATE TABLE pubg.playerMatch(
     playername text,
     teamId int,
     rank int,
-    stats map<text, double>,
+    stats text,
     PRIMARY KEY ((accountId), matchId)
 );
 
@@ -50,6 +50,7 @@ CREATE TABLE pubg.player(
     playername text,
     accountid text,
     lastupdated timestamp,
+    seasonStats text,
     PRIMARY KEY (playername)
 );
 
