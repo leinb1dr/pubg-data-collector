@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.leinbach.pubg.clients.domain.*;
 import io.leinbach.pubg.domain.MatchDto;
 import io.leinbach.pubg.domain.ParticipantsDto;
+import io.leinbach.pubg.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -43,12 +44,12 @@ public class MatchesClient {
                 .header("accept", "application/json")
                 .retrieve()
                 .bodyToMono(MatchData.class)
-                .onErrorReturn(throwable -> {
+                .onErrorMap(throwable -> {
                     if (throwable instanceof WebClientResponseException) {
                         return HttpStatus.NOT_FOUND.equals(((WebClientResponseException) throwable).getStatusCode());
                     }
                     return false;
-                }, new MatchData())
+                }, NotFoundException::new)
 
                 .map(matchData -> {
                     MatchEntity matchEntity = matchData.getData();

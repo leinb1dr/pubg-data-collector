@@ -5,6 +5,7 @@ import io.leinbach.pubg.clients.TelemetryClient;
 import io.leinbach.pubg.data.dao.PlayerMatchDao;
 import io.leinbach.pubg.domain.MatchDto;
 import io.leinbach.pubg.domain.ParticipantsDto;
+import io.leinbach.pubg.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -60,6 +61,8 @@ public class MatchConsumer {
                 .last();
 
         playerMatch.zipWith(processEvents, (first, second) -> true)
+                .doOnError(throwable -> LOGGER.warn("failed to process match", throwable))
+                .onErrorReturn(NotFoundException.class, true)
                 .block();
 
         LOGGER.info("COMPLETE");

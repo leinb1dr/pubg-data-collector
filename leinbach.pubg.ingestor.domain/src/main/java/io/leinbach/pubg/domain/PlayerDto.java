@@ -23,6 +23,18 @@ public class PlayerDto {
     @JsonProperty
     private SeasonStatsDto seasonStats;
 
+    public Boolean getProcessing() {
+        return processing;
+    }
+
+    public PlayerDto processing(Boolean processing) {
+        this.processing = processing;
+        return this;
+    }
+
+    @JsonProperty
+    private Boolean processing;
+
     public PlayerDto() {
     }
 

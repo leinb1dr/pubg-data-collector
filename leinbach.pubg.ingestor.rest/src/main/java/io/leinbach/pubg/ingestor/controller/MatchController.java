@@ -5,10 +5,7 @@ import io.leinbach.pubg.data.dao.PlayerMatchDao;
 import io.leinbach.pubg.domain.MatchDto;
 import io.leinbach.pubg.domain.PlayerDto;
 import io.leinbach.pubg.ingestor.controller.util.RefreshPlayer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -29,6 +26,7 @@ public class MatchController {
         this.refreshPlayer = refreshPlayer;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/player/{accountId}/matches")
     public Flux<MatchDto> getMatches(@PathVariable String accountId, @RequestParam(required = false) String gameMode) {
         Mono<PlayerDto> playerById = playerDao.getPlayerById(accountId);
