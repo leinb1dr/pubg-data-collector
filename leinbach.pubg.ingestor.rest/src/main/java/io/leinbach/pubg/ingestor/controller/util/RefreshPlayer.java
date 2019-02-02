@@ -3,7 +3,6 @@ package io.leinbach.pubg.ingestor.controller.util;
 import io.leinbach.pubg.clients.PlayersClient;
 import io.leinbach.pubg.data.dao.MatchProcessingDao;
 import io.leinbach.pubg.data.dao.PlayerDao;
-import io.leinbach.pubg.domain.MatchDto;
 import io.leinbach.pubg.domain.PlayerDto;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author leinb
@@ -34,12 +32,11 @@ public class RefreshPlayer {
 
 
     public Mono<PlayerDto> refreshPlayer(PlayerDto playerDto) {
-        Mono<PlayerDto> seasonStatsUpdate = playersClient.getSeasonStats(playerDto.getId(), "division.bro.official.pc-2018-02")
+        return playersClient.getSeasonStats(playerDto.getId(), "division.bro.official.pc-2018-02")
                 .flatMap(playerWithSeason -> Mono.just(playerWithSeason.name(playerDto.getName()))
                         .map(player -> player.lastUpdate(LocalDateTime.now()))
-                        .flatMap(playerDao::savePlayer));
-
-        Mono<List<Boolean>> matchListUpdate = playersClient.findPlayer(playerDto.getName())
+                        .flatMap(playerDao::savePlayer)
+                        .map(refreshedPlayer -> refreshedPlayer.matches(playerWithSeason.getMatches())))
                 .flatMapMany(pubgPlayer -> Flux.fromIterable(pubgPlayer.getMatches()))
 //                .take(1)
                 .flatMap(matchDto -> matchProcessingDao.needsProcessing(matchDto)
@@ -54,14 +51,10 @@ public class RefreshPlayer {
                                             return true;
                                         }));
                             } else {
-                                return Mono.just(false);
+                                return Mono.just(matchDto);
                             }
                         }))
-                .filter(Boolean::booleanValue)
-                .collectList();
-
-        return seasonStatsUpdate
-                .zipWith(matchListUpdate,
-                        (refreshPlayer, processList)-> refreshPlayer.processing(!processList.isEmpty()));
+                .collectList()
+                .map(ignore -> playerDto);
     }
 }
